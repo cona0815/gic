@@ -1,0 +1,1288 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>從零到一輕鬆上手 Gemini Skills｜AI 神隊友的一日校園生存指南</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,500&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --font-disp:"Fraunces",serif; --font-han:"Noto Sans TC",sans-serif;
+    --ink:#2a2233; --ink-soft:#5d5468; --line:rgba(0,0,0,.08);
+    --card:#ffffff; --card-soft:#f7f5fb;
+    --maxw:980px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth;scroll-padding-top:24px}
+  body{
+    font-family:var(--font-han);color:var(--ink);line-height:1.7;
+    -webkit-font-smoothing:antialiased;
+    background:
+      radial-gradient(120% 60% at 50% 0%, #fbe6d4 0%, transparent 45%),
+      linear-gradient(180deg,#fdf3ea 0%,#f1f4fb 28%,#eef9f8 50%,#fdf1e6 70%,#f3ecfa 86%,#ece9f7 100%);
+    background-attachment:fixed;
+  }
+
+  /* progress bar */
+  .progress{position:fixed;top:0;left:0;height:4px;z-index:60;width:0;
+    background:linear-gradient(90deg,#e98a4a,#d65a8a,#7b6ad0);border-radius:0 4px 4px 0;transition:width .12s}
+
+  /* hero */
+  .hero{position:relative;overflow:hidden;color:#fff;text-align:center;
+    padding:clamp(54px,9vw,104px) 24px clamp(46px,7vw,80px);
+    background:linear-gradient(125deg,#2b2e7a 0%,#4f46c9 42%,#6d5cf0 70%,#8a7df5 100%);}
+  .hero::after{content:"";position:absolute;inset:0;opacity:.6;pointer-events:none;
+    background:radial-gradient(55% 110% at 88% -15%,rgba(120,170,255,.55),transparent 60%),
+      radial-gradient(45% 90% at 8% 115%,rgba(150,110,255,.4),transparent 60%);}
+  .hero .sun{position:absolute;top:-60px;left:-60px;width:240px;height:240px;border-radius:50%;
+    background:radial-gradient(circle at 60% 60%,rgba(150,200,255,.55),rgba(120,140,255,.2) 60%,transparent 72%);
+    filter:blur(2px);pointer-events:none}
+  .hero-inner{position:relative;z-index:1;max-width:var(--maxw);margin:0 auto}
+  .hero h1{font-size:clamp(30px,5.6vw,62px);font-weight:900;line-height:1.12;letter-spacing:-.01em;
+    text-shadow:0 4px 20px rgba(0,0,0,.18)}
+  .hero h1 .en{font-family:var(--font-disp);font-style:italic;font-weight:600}
+  .hero .sub{font-size:clamp(17px,2.6vw,28px);font-weight:700;margin-top:.5em;opacity:.97}
+  .hero .chips{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:1.4em}
+  .hero .chip{background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.4);
+    border-radius:999px;padding:.4em 1.1em;font-size:clamp(13px,1.6vw,16px);font-weight:600;backdrop-filter:blur(4px)}
+  .hero .presenter{margin-top:1.5em;font-size:clamp(14px,1.7vw,17px);opacity:.92}
+  .sec-intro{margin-left:auto;display:inline-flex;align-items:center;gap:.35em;flex-shrink:0;
+    background:linear-gradient(120deg,#7b6ad0,#6d5cf0);color:#fff;text-decoration:none;
+    font-size:clamp(13px,1.4vw,15px);font-weight:700;padding:.4em 1em;border-radius:999px;
+    box-shadow:0 8px 20px -10px rgba(109,92,240,.6);transition:transform .15s,box-shadow .2s}
+  .sec-intro:hover{transform:translateY(-1px);box-shadow:0 10px 24px -10px rgba(109,92,240,.75)}
+  /* hero DCPS acrostic */
+  .hero-dcps{display:flex;flex-wrap:wrap;gap:clamp(8px,1.6vw,14px);justify-content:center;margin-top:1.5em}
+  .hero-dcps .hd{display:flex;flex-direction:column;align-items:center;gap:2px;
+    background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.4);
+    border-radius:14px;padding:10px clamp(12px,1.8vw,20px);min-width:118px}
+  .hero-dcps .hd-l{font-family:var(--font-disp);font-weight:600;font-size:clamp(26px,3.4vw,38px);line-height:1;color:#ffd56b;text-shadow:0 2px 10px rgba(0,0,0,.25)}
+  .hero-dcps .hd-e{font-family:var(--font-disp);font-size:clamp(12px,1.3vw,14px);color:#fff;font-weight:600;margin-top:.25em;white-space:nowrap;text-align:center}
+  .hero-dcps .hd-e b{color:#ffe08a}
+  .hero-dcps .hd-z{font-size:12.5px;color:rgba(255,255,255,.85)}
+  .hero .presenter b{font-weight:700}
+
+  /* layout */
+  main{max-width:var(--maxw);margin:0 auto;padding:clamp(28px,5vw,56px) clamp(16px,4vw,28px) 120px}
+  section.block{
+    background:rgba(255,255,255,.78);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+    border:1px solid rgba(255,255,255,.7);border-radius:22px;
+    padding:clamp(22px,3.4vw,40px);margin-bottom:clamp(22px,3.5vw,34px);
+    box-shadow:0 18px 50px -28px rgba(40,20,60,.35);scroll-margin-top:20px;
+  }
+  .h2{display:flex;align-items:center;gap:.5em;font-size:clamp(20px,3vw,30px);font-weight:900;
+    color:var(--acc,#3b6fd4);line-height:1.25;padding-bottom:.5em;border-bottom:2px solid var(--line);margin-bottom:1em}
+  .h2 .ord{color:var(--acc,#3b6fd4)}
+  .h2 .ico{font-size:1.05em}
+  .lead{font-size:clamp(15px,1.7vw,18px);color:var(--ink-soft);margin-bottom:1.1em}
+  .lead b,b.hot{color:#d6492b;font-weight:700}
+  .tag{display:inline-block;font-family:var(--font-disp);font-weight:600;background:#f0ebfb;color:#6a4bd0;
+    border:1px solid #b9a6ee;border-radius:8px;padding:.02em .5em;margin:0 .1em;font-size:.92em}
+
+  /* generic info card / quote */
+  .quote{background:var(--card-soft);border-left:5px solid var(--acc,#7b6ad0);border-radius:0 14px 14px 0;
+    padding:clamp(16px,2vw,22px) clamp(18px,2.2vw,26px);font-size:clamp(14px,1.6vw,17px);line-height:1.85;color:#473b58}
+  .quote b{color:var(--ink)} .quote .pink{color:#c43d7a;font-weight:700} .quote .purple{color:#6a4bd0;font-weight:700}
+
+  /* steps (setup) */
+  .steps{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+  .step{background:#fff;border:1px solid var(--line);border-radius:16px;padding:clamp(15px,1.8vw,22px);box-shadow:0 8px 24px -18px rgba(0,0,0,.3)}
+  .step-no{font-family:var(--font-disp);font-weight:600;font-size:22px;width:1.9em;height:1.9em;border-radius:50%;
+    background:var(--acc,#7b6ad0);color:#fff;display:grid;place-items:center;margin-bottom:.5em}
+  .step h3{font-size:clamp(15px,1.7vw,19px);font-weight:900;margin-bottom:.5em}
+  .step ol{list-style:none;counter-reset:s;display:flex;flex-direction:column;gap:.5em}
+  .step li{counter-increment:s;position:relative;padding-left:1.5em;font-size:clamp(13px,1.45vw,15.5px);color:var(--ink-soft);line-height:1.6}
+  .step li::before{content:counter(s);position:absolute;left:0;top:.05em;font-family:var(--font-disp);font-weight:600;color:var(--acc,#7b6ad0)}
+  .step b{color:var(--ink)}
+  .code{font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace;background:rgba(0,0,0,.07);
+    border:1px solid rgba(0,0,0,.12);border-radius:6px;padding:.04em .42em;font-size:.9em;white-space:nowrap}
+
+  /* video */
+  .video-wrap{display:grid;grid-template-columns:1.4fr 1fr;gap:20px;align-items:start}
+  .video-frame{position:relative;width:100%;padding-top:56.25%;border-radius:14px;overflow:hidden;border:1px solid var(--line);box-shadow:0 14px 36px -20px rgba(0,0,0,.45)}
+  .video-frame iframe{position:absolute;inset:0;width:100%;height:100%}
+  .yt-link{display:inline-block;margin-top:.6em;font-weight:700;color:#d6492b;text-decoration:none;border-bottom:2px solid transparent;font-size:15px}
+  .yt-link:hover{border-color:#d6492b}
+  .chapters{display:flex;flex-direction:column;gap:6px;max-height:430px;overflow-y:auto;padding-right:4px}
+  .chapter{display:flex;gap:10px;align-items:flex-start;text-align:left;cursor:pointer;background:#fff;
+    border:1px solid var(--line);border-radius:11px;padding:.55em .75em;transition:transform .15s,border-color .2s}
+  .chapter:hover{transform:translateX(3px);border-color:#e0708a}
+  .chapter.playing{background:#e0708a;border-color:#e0708a}
+  .chapter.playing *{color:#fff}
+  .ch-time{font-family:var(--font-disp);font-weight:600;color:#d6492b;white-space:nowrap;min-width:3.2em;font-size:14px}
+  .ch-title{font-size:14px;line-height:1.45;color:var(--ink)}
+
+  /* key points */
+  .kp-banner{display:flex;gap:16px;align-items:flex-start;
+    background:linear-gradient(120deg,#fff1e6,#f7f5fb);border:1px solid #f1c9a8;border-radius:16px;
+    padding:clamp(16px,2vw,22px) clamp(18px,2.2vw,26px);margin-bottom:14px}
+  .kp-ico{font-size:clamp(28px,3.4vw,40px);flex-shrink:0}
+  .kp-banner b{font-size:clamp(16px,1.9vw,21px)} .kp-banner div{color:var(--ink-soft);font-size:clamp(14px,1.6vw,17px);line-height:1.75}
+  .kgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  .kcard{background:#fff;border:1px solid var(--line);border-radius:14px;padding:clamp(15px,1.7vw,20px);box-shadow:0 8px 24px -18px rgba(0,0,0,.28)}
+  .kcard h3{font-size:clamp(15px,1.6vw,18px);font-weight:900;margin-bottom:.5em}
+  .kcard h3 small{display:block;font-size:.62em;font-weight:500;color:var(--ink-soft);margin-top:.2em}
+  .kcard ul{list-style:none;display:flex;flex-direction:column;gap:.5em}
+  .kcard li{position:relative;padding-left:1em;font-size:clamp(13px,1.45vw,15.5px);color:var(--ink-soft);line-height:1.6}
+  .kcard li::before{content:"";position:absolute;left:0;top:.6em;width:5px;height:5px;border-radius:50%;background:#e0708a}
+  .kcard b{color:var(--ink)}
+
+  /* day timeline blocks */
+  .day-intro{margin-bottom:1.2em}
+  .tblock{position:relative;background:#fff;border:1px solid var(--line);border-left:6px solid var(--t,#d65a2c);
+    border-radius:0 16px 16px 0;padding:clamp(16px,2vw,24px) clamp(18px,2.2vw,26px);margin-bottom:14px;
+    box-shadow:0 10px 28px -20px rgba(0,0,0,.3);scroll-margin-top:20px}
+  .tb-head{display:flex;align-items:baseline;gap:.6em;flex-wrap:wrap;margin-bottom:.5em}
+  .tb-time{font-family:var(--font-disp);font-weight:600;font-size:clamp(26px,4vw,40px);color:var(--t,#d65a2c);line-height:1}
+  .tb-phase{font-size:clamp(12px,1.4vw,15px);font-weight:700;letter-spacing:.1em;color:var(--t,#d65a2c);background:color-mix(in srgb,var(--t,#d65a2c) 12%,#fff);border-radius:999px;padding:.2em .8em}
+  .tb-scene{font-size:clamp(16px,2vw,23px);font-weight:900;margin:.1em 0 .7em}
+  .tb-cards{display:flex;flex-direction:column;gap:10px}
+  .pcard{background:var(--card-soft);border-radius:12px;padding:.9em 1.1em}
+  .pcard .ph{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:.35em}
+  .badge{font-family:var(--font-disp);font-weight:600;font-size:14px;background:var(--t,#d65a2c);color:#fff;border-radius:999px;padding:.2em .8em}
+  .pcard .label{font-weight:700}
+  .pcard p{font-size:clamp(13px,1.5vw,16px);color:var(--ink-soft);line-height:1.7}
+  .tb-link{display:inline-block;margin-top:.6em;font-weight:700;font-size:clamp(13px,1.45vw,15px);
+    color:#fff;background:var(--t,#e26a1c);border-radius:999px;padding:.38em 1.1em;text-decoration:none;
+    transition:opacity .2s,transform .15s}
+  .tb-link:hover{opacity:.88;transform:translateY(-1px)}
+
+  /* prompt example */
+  .inline-prompt{margin-top:14px;padding-top:16px;border-top:1px dashed var(--line)}
+  .ip-title{font-weight:900;color:var(--t,#444);font-size:clamp(14px,1.6vw,17px);margin-bottom:.8em}
+  details.inline-prompt{margin-top:0;padding-top:0;border-top:none}
+  /* EzType help */
+  .eztype-help{margin-top:10px;border:1px solid color-mix(in srgb, var(--t,#888) 28%, #fff);border-radius:12px;overflow:hidden}
+  .eztype-help > summary{cursor:pointer;list-style:none;padding:10px 14px;font-weight:800;color:var(--t,#444);
+    background:color-mix(in srgb, var(--t,#888) 9%, #fff);display:flex;align-items:center;gap:.5em}
+  .eztype-help > summary::-webkit-details-marker{display:none}
+  .eztype-help > summary::before{content:"▸";transition:transform .2s}
+  .eztype-help[open] > summary::before{transform:rotate(90deg)}
+  .eztype-help .ez-body{padding:14px 16px;font-size:14px;line-height:1.75;color:#333}
+  .eztype-help .ez-body h4{margin:1.1em 0 .4em;font-size:14.5px;color:var(--t,#444)}
+  .eztype-help .ez-body h4:first-child{margin-top:0}
+  .eztype-help .ez-body ol,.eztype-help .ez-body ul{margin:.3em 0;padding-left:1.4em}
+  .eztype-help .ez-body li{margin:.3em 0}
+  .eztype-help .ez-intro{background:color-mix(in srgb, var(--t,#888) 8%, #fff);padding:8px 12px;border-radius:8px;margin-bottom:.4em}
+  .eztype-help .ez-note{font-size:13px;color:#777}
+  .eztype-help .ez-credit{margin-top:1em;padding-top:.7em;border-top:1px dashed #ddd;font-size:12.5px;color:#999;text-align:center}
+  .case-box{margin-top:10px;padding:12px 16px;border:1px solid color-mix(in srgb, var(--t,#888) 26%, #fff);
+    border-radius:12px;background:color-mix(in srgb, var(--t,#888) 7%, #fff)}
+  .case-title{font-weight:800;color:var(--t,#444);font-size:14.5px}
+  .case-box .tb-link{margin-top:6px}
+  /* hierarchical example groups */
+  .case-group{margin-top:8px;border:1px solid color-mix(in srgb, var(--t,#888) 20%, #fff);border-radius:10px;background:#fff;overflow:hidden}
+  .case-group > summary{cursor:pointer;list-style:none;padding:8px 12px;font-weight:700;font-size:13.5px;color:#4a3a6a;
+    display:flex;align-items:center;gap:.4em;flex-wrap:wrap}
+  .case-group > summary::-webkit-details-marker{display:none}
+  .case-group > summary::before{content:"▸";color:var(--t,#888);transition:transform .2s}
+  .case-group[open] > summary::before{transform:rotate(90deg)}
+  .case-group .cg-tag{font-weight:600;font-size:12px;color:#8a7aa8;background:color-mix(in srgb, var(--t,#888) 10%, #fff);padding:1px 8px;border-radius:20px}
+  .case-group .cg-body{padding:4px 12px 12px}
+  .case-group .cg-body p{font-size:13px;color:#5a4a7a;margin:.2em 0 .5em}
+  details.inline-prompt > summary.ip-title{cursor:pointer;list-style:none;display:flex;align-items:center;gap:.5em;margin-bottom:0;
+    padding:10px 14px;background:color-mix(in srgb, var(--t,#888) 9%, #fff);border:1px solid color-mix(in srgb, var(--t,#888) 28%, #fff);border-radius:12px;transition:background .15s}
+  details.inline-prompt > summary.ip-title:hover{background:color-mix(in srgb, var(--t,#888) 16%, #fff)}
+  details.inline-prompt > summary.ip-title::-webkit-details-marker{display:none}
+  details.inline-prompt > summary.ip-title::before{content:"▸";font-size:.9em;transition:transform .2s;flex-shrink:0}
+  details.inline-prompt[open] > summary.ip-title{border-bottom-left-radius:0;border-bottom-right-radius:0;margin-bottom:0}
+  details.inline-prompt[open] > summary.ip-title::before{transform:rotate(90deg)}
+  details.inline-prompt > .prompt-layout,
+  details.inline-prompt > .subj-tabs{margin-top:12px}
+  .subj-tabs{display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap}
+  .stab{font-family:var(--font-han);font-weight:700;font-size:clamp(13px,1.4vw,15px);
+    border:2px solid var(--t,#4f9a26);border-radius:999px;padding:.35em .9em;cursor:pointer;
+    background:transparent;color:var(--t,#4f9a26);transition:background .2s,color .2s}
+  .stab.active,.stab:hover{background:var(--t,#4f9a26);color:#fff}
+  .subj-panels{flex:1}
+  .subj-panel{height:100%}
+  .export-tip{display:flex;gap:12px;align-items:flex-start;margin-top:14px;
+    background:linear-gradient(120deg,#edfce8,#f4fef0);border:1px solid #b6e8a8;
+    border-left:5px solid #4f9a26;border-radius:0 12px 12px 0;
+    padding:clamp(12px,1.6vw,18px) clamp(14px,1.8vw,20px)}
+  .et-icon{font-size:clamp(22px,2.8vw,30px);flex-shrink:0;line-height:1.2}
+  .export-tip b{color:#2d6e18}
+  .export-tip div{font-size:clamp(13px,1.45vw,15.5px);color:#3a5e2a;line-height:1.7}
+  .limit-note{display:flex;gap:12px;align-items:flex-start;margin-top:12px;
+    background:linear-gradient(120deg,#fff4e0,#fffaf0);border:1px solid #f0c987;
+    border-left:5px solid #e08a1e;border-radius:0 12px 12px 0;
+    padding:clamp(12px,1.6vw,18px) clamp(14px,1.8vw,20px)}
+  .ln-icon{font-size:clamp(20px,2.6vw,28px);flex-shrink:0;line-height:1.2}
+  .limit-note b{color:#9a5b08}
+  .limit-note > div{font-size:clamp(13px,1.45vw,15.5px);color:#6b4a1a;line-height:1.75}
+  .ln-row{display:flex;gap:8px;margin-top:.6em}
+  .ln-num{font-weight:900;color:#e08a1e;flex-shrink:0}
+  .ex-label{font-weight:900;color:#3f7a1f;font-size:clamp(15px,1.7vw,19px);margin:1.4em 0 .7em;padding-left:.6em;border-left:5px solid #4f9a26}
+  .ex-label:first-of-type{margin-top:0}
+  .prompt-layout{display:grid;grid-template-columns:1fr 1.25fr;gap:18px;align-items:start}
+  .steps-box{background:#fff7cd;border-left:5px solid #e3a008;border-radius:12px;padding:clamp(15px,1.8vw,20px) clamp(16px,2vw,22px)}
+  .sb-title{font-weight:900;color:#7a4f06;font-size:clamp(15px,1.6vw,18px);margin-bottom:.5em}
+  .steps-box ol{list-style:none;counter-reset:p;display:flex;flex-direction:column;gap:.55em}
+  .steps-box li{counter-increment:p;position:relative;padding-left:1.7em;font-size:clamp(13px,1.45vw,15.5px);color:#5c4410;line-height:1.6}
+  .steps-box li::before{content:counter(p);position:absolute;left:0;top:0;width:1.35em;height:1.35em;border-radius:50%;background:#e3a008;color:#fff;font-size:.85em;font-weight:700;display:grid;place-items:center}
+  .steps-box b{color:#7a4f06}
+  .steps-box .code{background:rgba(0,0,0,.08);border-color:rgba(0,0,0,.14);color:#5c4410}
+  .prompt-box{position:relative;background:#1e2430;border-radius:14px;padding:clamp(18px,2.2vw,26px);box-shadow:0 16px 40px -18px rgba(0,0,0,.55)}
+  .prompt-box pre{white-space:pre-wrap;word-break:break-word;margin:0;font-family:"Noto Sans TC",ui-monospace,monospace;color:#e7ebf2;font-size:clamp(13px,1.45vw,15.5px);line-height:1.85}
+  .prompt-box mark{background:none;color:#7fd6ff;font-weight:700}
+  .prompt-box hl{background:none;color:#ffb454;font-weight:700}
+  .copy-btn{position:absolute;top:12px;right:12px;background:rgba(255,255,255,.1);color:#e7ebf2;border:1px solid rgba(255,255,255,.2);border-radius:9px;padding:.4em .8em;font-size:13px;font-weight:700;cursor:pointer;font-family:var(--font-han);transition:background .2s,transform .15s}
+  .copy-btn:hover{background:rgba(255,255,255,.2);transform:translateY(-1px)}
+  .copy-btn.done{background:#2e7d32;border-color:#2e7d32}
+
+  /* closing */
+  section.block.closing{background:linear-gradient(135deg,#3a3a66,#262549);border-color:rgba(255,255,255,.12)}
+  .closing{text-align:center;color:#eef0ff}
+  .closing .h2{color:#fff;border-color:rgba(255,255,255,.18);justify-content:center}
+  .closing .h2 .ord{color:#ffc56b}
+  .closing p{color:#dfe2ff;font-size:clamp(15px,1.8vw,19px)}
+  .closing p b{color:#fff}
+  .closing p b.hl-gold{color:#ffd56b}
+  .dcps .de .hi{color:#ffc56b;font-weight:800}
+  .stat-row{display:flex;gap:clamp(28px,6vw,72px);justify-content:center;flex-wrap:wrap;margin-top:1.2em}
+  .stat .n{font-family:var(--font-disp);font-weight:600;font-size:clamp(38px,6vw,76px);line-height:1;color:#ffc56b}
+  .stat .t{font-size:14px;color:#c7cbf0;margin-top:.4em}
+  /* DCPS acrostic */
+  .dcps-row{display:flex;gap:clamp(14px,3vw,34px);justify-content:center;flex-wrap:wrap;margin-top:1.4em}
+  .dcps{text-align:center;width:auto;min-width:130px;display:flex;flex-direction:column;align-items:center}
+  .dcps .dl{font-family:var(--font-disp);font-weight:600;font-size:clamp(34px,5vw,56px);line-height:1;color:#ffc56b}
+  .dcps .de{font-family:var(--font-disp);font-size:clamp(13px,1.5vw,16px);color:#fff;margin-top:.4em;font-weight:600;letter-spacing:.2px;white-space:nowrap}
+  .dcps .dz{font-size:clamp(13px,1.5vw,15px);color:#d6d9f5;margin-top:.35em}
+  .dcps-foot{text-align:center;color:#a8acdf;font-size:13px;letter-spacing:2px;margin-top:1.3em}
+  /* account format box in setup step 1 */
+  .acct-box{margin-top:10px;padding:10px 12px;background:#f3f6ff;border:1px solid #d6e0fb;border-radius:10px}
+  .acct-hint{font-size:12.5px;color:#3b6fd4;font-weight:700;margin-bottom:.5em}
+  .acct-row{display:flex;align-items:center;gap:8px;margin-top:6px}
+  .acct-label{flex-shrink:0;font-size:12px;font-weight:800;color:#fff;background:#3b6fd4;border-radius:6px;padding:2px 8px}
+  .acct-row code{flex:1;font-family:var(--font-mono,monospace);font-size:14px;color:#1f2d4a;background:#fff;border:1px solid #d6e0fb;border-radius:7px;padding:5px 10px}
+  .acct-copy{position:static!important;background:#3b6fd4!important;color:#fff!important;border:none!important;padding:.45em .7em!important;flex-shrink:0}
+  .acct-copy:hover{background:#2f5cc0!important}
+  .mini-copy{position:static!important;display:inline-flex;align-items:center;vertical-align:middle;
+    background:#3b6fd4!important;color:#fff!important;border:none!important;padding:.12em .42em!important;
+    font-size:12px!important;border-radius:6px;margin-left:.3em;line-height:1.4}
+  .mini-copy:hover{background:#2f5cc0!important}
+  .cmd-box{display:flex;align-items:center;gap:8px;margin-top:8px;background:#fff7e6;border:1px solid #f0d28a;border-radius:10px;padding:8px 10px}
+  .cmd-box code{flex:1;font-family:var(--font-mono,monospace);font-size:12.5px;color:#5a4410;word-break:break-all;line-height:1.55}
+  .cmd-box .mini-copy{flex-shrink:0;margin-left:0}
+  .cmd-note{font-size:12.5px;color:#7a5a06;margin-top:.55em;line-height:1.6}
+
+  /* right nav dock */
+  .dock{position:fixed;right:18px;top:50%;transform:translateY(-50%);z-index:50;
+    display:flex;flex-direction:column;gap:8px;background:rgba(255,255,255,.7);backdrop-filter:blur(10px);
+    border:1px solid rgba(255,255,255,.8);border-radius:18px;padding:10px;box-shadow:0 14px 40px -20px rgba(40,20,60,.4)}
+  .dock a{display:flex;align-items:center;gap:7px;cursor:pointer;text-decoration:none;
+    border-radius:12px;padding:8px 12px 8px 8px;color:var(--ink-soft);transition:background .25s,color .25s}
+  .dock a .d-key{font-size:18px;width:24px;text-align:center;flex-shrink:0;line-height:1}
+  .dock a .d-label{white-space:nowrap;font-size:13.5px;font-weight:700}
+  .dock a:hover{background:rgba(123,106,208,.14);color:#5a45c0}
+  .dock a.active{background:#7b6ad0;color:#fff}
+  .dock a.active .d-key{color:#fff}
+  /* collapse toggle */
+  .dock-toggle{align-self:center;border:none;background:transparent;cursor:pointer;font-size:15px;
+    color:var(--ink-soft);padding:4px 10px;border-radius:9px;line-height:1;font-weight:700}
+  .dock-toggle:hover{background:rgba(123,106,208,.14);color:#5a45c0}
+  .dock.collapsed{padding:6px}
+  .dock.collapsed > a,.dock.collapsed > .dock-group{display:none}
+  .dock.collapsed .dock-toggle{font-size:20px;padding:6px 10px}
+  /* expandable submenu under 參 */
+  .dock-group{position:relative}
+  .submenu{position:absolute;right:100%;top:50%;transform:translateY(-50%);margin-right:8px;
+    display:none;flex-direction:column;gap:3px;background:rgba(255,255,255,.96);backdrop-filter:blur(10px);
+    border:1px solid rgba(123,106,208,.25);border-radius:14px;padding:8px;
+    box-shadow:0 16px 44px -18px rgba(40,20,60,.5);white-space:nowrap}
+  .submenu::after{content:"";position:absolute;left:100%;top:0;width:12px;height:100%}
+  .dock-group:hover .submenu{display:flex}
+  .submenu a{display:block;padding:6px 12px;border-radius:9px;font-size:13px;font-weight:700;
+    color:var(--ink-soft);text-decoration:none;cursor:pointer;transition:background .2s,color .2s}
+  .submenu a:hover{background:rgba(123,106,208,.16);color:#5a45c0}
+  .submenu a.active{background:#7b6ad0;color:#fff}
+
+  .editnote{font-size:12px;color:var(--ink-soft);opacity:.7;text-align:center;margin-top:8px}
+
+  @media (max-width:860px){
+    .steps,.kgrid{grid-template-columns:1fr}
+    .video-wrap,.prompt-layout{grid-template-columns:1fr}
+    .kp-banner{flex-direction:column}
+    .chapters{max-height:none}
+  }
+  @media (max-width:680px){ .dock{display:none} }
+</style>
+</head>
+<body>
+<div class="progress" id="progress"></div>
+
+<header class="hero" id="hero">
+  <div class="sun"></div>
+  <div class="hero-inner">
+    <h1>🚀 從零到一輕鬆上手 <span class="en">Gemini Skills</span></h1>
+    <div class="sub">一鍵叫出技能，AI 神隊友隨叫隨到</div>
+    <div class="hero-dcps">
+      <div class="hd"><span class="hd-l">D</span><span class="hd-e"><b>D</b>escribe once</span><span class="hd-z">描述一次</span></div>
+      <div class="hd"><span class="hd-l">C</span><span class="hd-e"><b>C</b>all anytime</span><span class="hd-z">隨時呼叫</span></div>
+      <div class="hd"><span class="hd-l">P</span><span class="hd-e"><b>P</b>owers every page</span><span class="hd-z">每頁都能用</span></div>
+      <div class="hd"><span class="hd-l">S</span><span class="hd-e"><b>S</b>aves your time</span><span class="hd-z">省你的寶貴時間</span></div>
+    </div>
+    <div class="presenter">分享人：<b>楊宗霖　大橋國小（DCPS）</b></div>
+  </div>
+</header>
+
+<main>
+  <!-- 壹 -->
+  <section class="block" id="sec3" style="--acc:#7b4bd0">
+    <div class="h2"><span class="ico">🧠</span><span class="ord">壹、</span>為什麼老師需要 Skills？<a class="sec-intro" href="https://canva.link/jsl37va6gyt9vu7" target="_blank" rel="noopener">📖 前言</a></div>
+    <div class="kp-banner">
+      <span class="kp-ico">😩</span>
+      <div><b>老師的痛點：每次都要重新上傳、重新打一遍</b><br>
+      過去，每次想請 AI 幫忙，都得先<b>貼上晨會通知、再貼上課文或影片連結</b>、然後打一大段說明……一個步驟都不能少。有了 <b>Skills（技能）</b>，只要設定一次——<b>不用再一個一個上傳資料，也不用再重新打字</b>，下次輸入一個斜線 <span class="code">/</span>，AI 立刻依你設定好的方式動作。</div>
+    </div>
+    <div class="kgrid">
+      <div class="kcard">
+        <h3>⏱️ 省下重複勞動<small>設定一次，終身享用</small></h3>
+        <ul>
+          <li>把「整理晨會重點」「課文心智圖」「活動海報」這類常用任務存成技能卡，下次一鍵呼叫</li>
+          <li>不用每次重新解釋你要什麼，<b>AI 記得你的習慣</b></li>
+          <li>一個老師帳號可以存多張技能，不同角色（導師、科任、召集人）各自設定</li>
+        </ul>
+      </div>
+      <div class="kcard">
+        <h3>🔒 學生資料不外流<small>Chrome 原生，最安心</small></h3>
+        <ul>
+          <li>Chrome <b>內建</b>功能，不需要安裝任何第三方外掛或 App</li>
+          <li>學生評語、個人資料、晨會與班級資訊等敏感內容，<b>不會傳給來路不明的服務</b></li>
+          <li>連線 <span class="tag">@Google Workspace</span> 直接讀取雲端資料，<b>不用手動上傳</b></li>
+        </ul>
+      </div>
+      <div class="kcard">
+        <h3>🔑 兩個必學的操作<small>會這兩招就夠了</small></h3>
+        <ul>
+          <li><span class="code">/</span> <b>叫出技能</b>：在任何網頁輸入斜線，選你存好的技能，AI 依設定立刻執行——<b>不用再打那一大段說明</b></li>
+          <li><span class="code">@</span> <b>指定資料來源</b>：告訴 AI 去讀哪裡——<span class="tag">@Google Workspace</span> 抓雲端資料、<span class="tag">@YouTube</span> 拆解影片，也能直接讀「<b>你正在看的當前網頁</b>」，甚至用 <span class="code">@</span> <b>把其他分頁也加進來一起讀</b>（例如比較多支影片）——全都<b>不用手動上傳檔案</b></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 貳 -->
+  <!-- 貳 -->
+  <section class="block" id="sec1" style="--acc:#3b6fd4">
+    <div class="h2"><span class="ico">🛠️</span><span class="ord">貳、</span>開始之前：六步驟設定好 Chrome Skills</div>
+    <p class="lead">研習開場先把環境設定好。跟著六個步驟——登入、連線 Google、開啟 Skills、建立技能卡，最後附上<b>開不出來時的地區解法</b>。<b>全部設定完成，再進入實戰。</b></p>
+    <div class="steps">
+      <div class="step">
+        <div class="step-no">1</div><h3>登入 Chrome（Google 帳號）</h3>
+        <ol>
+          <li>打開 Chrome 瀏覽器，點<b>右上角頭像</b>圖示</li>
+          <li>用你的 <b>Google 帳號登入</b>（學校或個人帳號皆可）</li>
+          <li>建議用平常存 Google 雲端資料的那個帳號——登入後才有 Gemini 與後續 <span class="tag">@Google Workspace</span> 功能</li>
+        </ol>
+        <div class="acct-box">
+          <div class="acct-hint">💡 只記得帳號前面、忘了後綴？對照一下格式：</div>
+          <div class="acct-row"><span class="acct-label">個人</span><code id="acct-personal">xxxx@gmail.com</code><button class="copy-btn acct-copy" data-target="acct-personal" aria-label="複製">⧉</button></div>
+          <div class="acct-row"><span class="acct-label">學校</span><code id="acct-school">xxxx@go.edu.tw</code><button class="copy-btn acct-copy" data-target="acct-school" aria-label="複製">⧉</button></div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-no">2</div><h3>連線 Google 服務</h3>
+        <ol>
+          <li>網址列輸入 <span class="code" id="url-gemini">chrome://settings/ai/gemini</span><button class="copy-btn mini-copy" data-target="url-gemini" aria-label="複製">⧉</button> 後按 Enter</li>
+          <li>開啟右側各項開關，解鎖 <span class="tag">@Google Workspace</span> <span class="tag">@YouTube</span> <span class="tag">@Gmail</span> <span class="tag">@Google 日曆</span> <span class="tag">@Google 雲端硬碟</span></li>
+          <li>連好後，AI 可直接讀取你的 Google 資料，<b>不用再手動上傳檔案</b></li>
+        </ol>
+      </div>
+      <div class="step">
+        <div class="step-no">3</div><h3>開啟 Skills 實驗功能</h3>
+        <ol>
+          <li>網址列輸入 <span class="code" id="url-flags">chrome://flags</span><button class="copy-btn mini-copy" data-target="url-flags" aria-label="複製">⧉</button> 後按 Enter</li>
+          <li>搜尋框輸入「<b>Skills</b>」</li>
+          <li>下拉選單從 <span class="code">Default</span> 改成 <span class="code">Enabled</span></li>
+          <li>點右下角 <b>Relaunch</b> 重啟瀏覽器</li>
+        </ol>
+      </div>
+      <div class="step">
+        <div class="step-no">4</div><h3>建立個人化技能</h3>
+        <ol>
+          <li>在側邊欄輸入欄打「<span class="code">/</span>」，選「<b>＋ 加入技能</b>」</li>
+          <li>填<b>技能名稱</b>與<b>指令內容</b>（你的 Prompt）→ 按<b>儲存</b></li>
+          <li>另一招：先送出一段提示詞，點左側<b>閃電圖示</b>「儲存為技能」</li>
+          <li>之後在任何網頁打「<span class="code">/</span>」就能呼叫</li>
+        </ol>
+      </div>
+      <div class="step">
+        <div class="step-no">5</div><h3>在網頁中呼叫技能</h3>
+        <ol>
+          <li>前往想分析的網頁</li>
+          <li>點右上角「<b>問問 Gemini</b>」或用快速鍵打開側邊欄</li>
+          <li>選擇技能，一鍵套用！</li>
+        </ol>
+      </div>
+      <div class="step">
+        <div class="step-no">6</div><h3>開不出 Skills？地區解法</h3>
+        <ol>
+          <li>若 <span class="code">chrome://flags</span> 找不到 Skills，多半是<b>地區限制</b>（功能先對美國開放）</li>
+          <li>先<b>完全關閉 Chrome</b>，按 <b>Win 鍵 ＋ R</b>，貼上下面這行 → Enter，用「美國地區」重開</li>
+          <li>重開後再回 <span class="code">chrome://flags</span> 找 Skills</li>
+        </ol>
+        <div class="cmd-box">
+          <code id="cmd-chrome">"C:\Program Files\Google\Chrome\Application\chrome.exe" --variations-override-country=us</code>
+          <button class="copy-btn mini-copy" data-target="cmd-chrome" aria-label="複製">⧉</button>
+        </div>
+        <p class="cmd-note">※ 若沒反應，Chrome 可能裝在 <b>Program Files (x86)</b>；把路徑換成 <span class="code">C:\Program Files (x86)\Google\Chrome\Application\chrome.exe</span> 再試一次。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 肆 -->
+  <section class="block" id="sec4" style="--acc:#e0708a">
+    <div class="h2"><span class="ico">☀️</span><span class="ord">參、</span>AI 神隊友的一日：08:30 → 18:30</div>
+    <p class="lead day-intro">設定完成後，跟著一天的節奏走——六個校園時段，每個時段都有對應的實戰技能，把 AI 用好用滿。</p>
+
+    <div class="tblock" id="t0830" style="--t:#1f7fb3">
+      <div class="tb-head"><span class="tb-time">08:30</span><span class="tb-phase">晨會與早自修 📅</span></div>
+      <div class="tb-scene">消化行政庶務，行事曆自動排好</div>
+      <div class="tb-cards">
+        <div class="pcard"><div class="ph"><span class="badge">實戰</span><span class="tag">@Google Workspace</span></div>
+          <p>將落落長的晨會各處室宣導事項貼給 AI，一秒條列「導師需配合重點」，並直接下指令將重要日程自動加入 Google 行事曆。</p></div>
+        <div class="case-box">
+          <div class="case-title">🏫 大橋國小官網（拿學校公告來試）</div>
+          <p style="font-size:13.5px;color:#5a4a7a;margin:.2em 0 .7em">打開學校官網的<b>行事曆或最新公告</b>頁面，按 <span class="code">/</span> 呼叫「晨會行程整理」，讓 AI 直接從網頁挑出與你相關的日程。</p>
+          <a class="tb-link" href="https://www.dcps.tn.edu.tw/" target="_blank" rel="noopener">▶ 前往大橋國小官網 ↗</a>
+        </div>
+        <details class="inline-prompt">
+        <summary class="ip-title">📋 可直接複製的指令 —「晨會行程整理」</summary>
+        <div class="prompt-layout">
+          <div class="steps-box">
+            <div class="sb-title">🛠️ 實作步驟</div>
+            <ol>
+              <li>在側邊欄輸入 <span class="code">/</span> → 選「<b>＋ 加入技能</b>」，命名「<b>晨會行程整理</b>」</li>
+              <li>指令貼上右側文字，把〔身分〕改成你的角色 → 儲存</li>
+              <li>把晨會宣導內容貼進 Gemini，按 <span class="code">/</span> 呼叫此技能</li>
+              <li>勾選與你相關的項目 → 確認 → 一鍵進 Google 行事曆 📅</li>
+            </ol>
+            <p style="font-size:13px;color:#7a5a06;margin-top:.7em">※ 加入行事曆需先連線 <b>@Google Workspace</b>。</p>
+          </div>
+          <div class="prompt-box">
+            <button class="copy-btn" data-target="p-meeting" aria-label="複製指令">⧉ 複製</button>
+            <pre id="p-meeting">你是一位專業的「Google 日曆行政秘書」。
+
+<mark>【我的身分】</mark>我是〔○○班導師／○○老師／○○科任老師／電腦老師／○○委員會委員〕。（請依實際身分填寫，可多選）
+
+<mark>【任務】</mark>我會貼上一份晨會報告（各處室宣導事項）。請從中<hl>找出與我的身分相關</hl>的項目。
+
+<mark>【處理流程】</mark>
+1. 逐條檢視晨會內容，挑出和我有關的事項。
+2. 將項目<hl>依時間先後編號排序</hl>。
+3. 以清單列出，<hl>讓我逐項勾選確認</hl>。
+4. 我確認後，整理成可加入 Google 行事曆的格式（日期、時間、事項、地點）。
+
+請<hl>先列出與我相關的項目選單等我選擇，先不要直接加入</hl>日曆。</pre>
+          </div>
+        </div>
+      </details>
+      </div>
+      
+    </div>
+
+    <div class="tblock" id="t1030" style="--t:#4f9a26">
+      <div class="tb-head"><span class="tb-time">10:30</span><span class="tb-phase">影片輔助教學 🎬</span></div>
+      <div class="tb-scene">七大科目＋通用版的 AI 影片教學助手</div>
+      <div class="tb-cards">
+        <div class="pcard"><div class="ph"><span class="badge">實戰</span><span class="tag">@YouTube</span></div>
+          <p>各科都常用 YouTube 影片教學，但每次都要自己一段段看、手抄重點——太花時間了。AI 直接讀影片，依科目生出<b>材料/器材清單、步驟表、課堂提問</b>，再用「匯出到 Google 文件」永久保存，下次直接開文件上課。</p></div>
+        <div class="case-box">
+          <div class="case-title">🎬 範例影片（任選一支，用「✨ 通用」版試試）</div>
+          <p style="font-size:13.5px;color:#5a4a7a;margin:.2em 0 .7em">打開影片 → 在「通用」指令的<b>【我要教的主題】</b>填上對應主題 → 按 <span class="code">/</span> 呼叫技能，看 AI 整理成課堂教材。</p>
+          <a class="tb-link" href="https://www.youtube.com/watch?v=Ki5PhAwAwLE" target="_blank" rel="noopener">▶（健康教育）癲癇大發作的處理 ↗</a>
+          <a class="tb-link" href="https://www.youtube.com/watch?v=PGfqy2ndrqc" target="_blank" rel="noopener">▶（健康教育）哈姆立克急救法 ↗</a>
+          <a class="tb-link" href="https://www.youtube.com/watch?v=T0cSvNuJsOk" target="_blank" rel="noopener">▶（美勞）跳跳粽 DIY ↗</a>
+          <a class="tb-link" href="https://www.youtube.com/watch?v=1Mal4HnfVOo" target="_blank" rel="noopener">▶（社會）東港迎王平安祭 ↗</a>
+          <a class="tb-link" href="https://www.youtube.com/watch?v=AD78nOvFFUY&list=PLp2Y5q36tB-PGn8T2cENAP52SnqVo87jt" target="_blank" rel="noopener">▶（數學）長方體和正方體的表面積 ↗</a>
+        </div>
+        <details class="inline-prompt">
+        <summary class="ip-title">📋 選擇科目，複製對應指令</summary>
+        <div class="subj-tabs">
+          <button class="stab active" data-panel="panel-uni">✨ 通用</button>
+          <button class="stab" data-panel="panel-art">✂️ 美勞課</button>
+          <button class="stab" data-panel="panel-sci">🔬 自然課</button>
+          <button class="stab" data-panel="panel-soc">🌏 社會課</button>
+          <button class="stab" data-panel="panel-math">🔢 數學課</button>
+          <button class="stab" data-panel="panel-chi">📖 國語課</button>
+          <button class="stab" data-panel="panel-eng">🔤 英語課</button>
+          <button class="stab" data-panel="panel-mus">🎵 音樂課</button>
+        </div>
+        <div class="prompt-layout">
+          <div class="steps-box">
+            <div class="sb-title">🛠️ 實作步驟（各分頁通用）</div>
+            <ol>
+              <li>在側邊欄輸入 <span class="code">/</span> → 選「<b>＋ 加入技能</b>」，依科目命名（如「美勞影片拆解」）</li>
+              <li>右側選對應科目 → 複製指令貼上 → 儲存</li>
+              <li>開啟 YouTube 影片頁，按 <span class="code">/</span> 呼叫此技能</li>
+              <li>AI 自動讀影片，輸出對應格式的教學素材</li>
+              <li><b>★ 推薦：</b>點回應右下角 <b>⋯ 更多</b> →「<b>匯出到 Google 文件</b>」，<hl>素材永久保存在雲端</hl>，下次同樣的課直接開文件上課，不用再問 AI 📄</li>
+            </ol>
+            <p style="font-size:13px;color:#7a5a06;margin-top:.7em">※ 需先在 <b>chrome://settings/ai/gemini</b> 開啟 @YouTube 連線。</p>
+          </div>
+          <div class="subj-panels">
+            <div class="subj-panel prompt-box" id="panel-uni">
+              <button class="copy-btn" data-target="p-uni" aria-label="複製指令">⧉ 複製</button>
+              <pre id="p-uni">你是一位教學影片整理助理。
+
+<mark>【我要教的主題】</mark>〔請填，例如：健康教育—癲癇發作的處理／生命教育／防災演練／英語會話…〕
+
+<mark>【任務】</mark>我會提供一段 YouTube 教學影片（已用 @YouTube 連入）。請依「我要教的主題」，幫我整理成<hl>國小課堂可用</hl>的教材。
+
+<mark>【輸出格式】</mark>
+・第一行：📹 <hl>影片來源：影片標題 + 完整 YouTube 網址</hl>
+・<hl>核心內容摘要</hl>：先用子彈筆記整理重點；若影片有操作或流程，請拆成 <hl>Step-by-Step 步驟清單</hl>，每步前標上時間（如 02:15）。
+・<hl>重點名詞解釋</hl>：把主題相關的關鍵詞，用國小生懂的話解釋。
+・<hl>課堂提問</hl>：設計 3～5 題可以問學生的問題（附參考答案）。
+・<hl>老師提醒</hl>：安全注意、易混淆處，或可延伸的活動。
+
+<mark>【時間戳格式】</mark>時間點請<hl>只用純文字</hl>標示 [分:秒]（例如 00:55），不要附任何網址或超連結，<hl>絕對不要出現 google.com/search 開頭的網址</hl>。
+
+<mark>【語言要求】</mark>對象是<hl>國小生</hl>，全程使用簡單白話文；專業術語請加括號說明。
+
+<mark>【提醒】</mark>影片內容若涉及<hl>醫療、急救等專業資訊</hl>，請註明「實際操作請以專業醫護或正式教材為準」。
+
+<mark>【檔名建議】</mark>請在輸出的<hl>最前面加一行檔名</hl>，格式：<hl>【科目】課名_YYYYMMDD</hl>（例：【社會】東港迎王_20260605），方便我命名與搜尋。</pre>
+            </div>
+            <div class="subj-panel prompt-box" id="panel-art" style="display:none">
+              <button class="copy-btn" data-target="p-art" aria-label="複製指令">⧉ 複製</button>
+              <pre id="p-art">你是一位細心的美勞教學助理。
+
+<mark>【任務】</mark>我會提供一段 YouTube 美勞／藝術教學影片（已用 @YouTube 連入），內容可能是<hl>手作、繪畫、設計或美術鑑賞</hl>。請<hl>依影片性質</hl>，幫我整理成課堂可用的格式。
+
+<mark>【輸出格式】</mark>
+・第一行：📹 <hl>影片來源：影片標題 + 完整 YouTube 網址</hl>
+・<hl>核心內容摘要</hl>：先用<hl>子彈筆記</hl>整理影片重點；若為教學內容，請拆成 <hl>Step-by-Step 步驟清單</hl>，每步前標上時間（如 02:15）。
+・<hl>材料清單</hl>（含數量與規格）
+・<hl>手作步驟</hl>（對應影片時間點，每步不超過 2 行）
+・老師提醒（安全注意、難度提示或替代材料）
+
+請用條列式呈現，<hl>學生一眼看懂、老師上課直接照單宣布</hl>。若不是手作而是繪畫／鑑賞，「材料與步驟」可改為<hl>技法重點、欣賞要點或可模仿的元素</hl>。
+
+請<hl>依影片實際內容彈性調整</hl>，上述項目<hl>沒出現的可省略、不要硬湊</hl>。
+
+<mark>【時間戳格式】</mark>每個影片時間點，請<hl>只用純文字</hl>標示 [分:秒]（例如 00:55），<hl>不要附上任何網址、超連結或引用來源</hl>，尤其<hl>絕對不要出現 google.com/search 開頭的網址</hl>。畫面只留乾淨的時間，老師看到時間自己把影片拖到該處即可。
+
+<mark>【語言要求】</mark>對象是<hl>國小生</hl>，請全程使用簡單白話文，<hl>不用專業術語</hl>；若材料名稱較難，請在後面加括號說明（例：美工刀（切割用的刀）)。
+
+<mark>【檔名建議】</mark>請在輸出的<hl>最前面加一行檔名</hl>，格式：<hl>【科目】課名_YYYYMMDD</hl>（例：【社會】東港迎王_20260605），方便我命名與搜尋。</pre>
+            </div>
+            <div class="subj-panel prompt-box" id="panel-sci" style="display:none">
+              <button class="copy-btn" data-target="p-sci" aria-label="複製指令">⧉ 複製</button>
+              <pre id="p-sci">你是一位自然科教學助理。
+
+<mark>【任務】</mark>我會提供一段 YouTube 自然科教學影片（已用 @YouTube 連入）。內容可能是<hl>實驗、觀察、生態、天文、地球科學或自然現象</hl>。請<hl>依影片性質</hl>整理成課堂可用的格式。
+
+<mark>【輸出格式】</mark>
+・第一行：📹 <hl>影片來源：影片標題 + 完整 YouTube 網址</hl>
+・<hl>核心內容摘要</hl>：先用<hl>子彈筆記</hl>整理重點；若是操作或流程性內容，請拆成 <hl>Step-by-Step 步驟清單</hl>，每步前標上時間（如 02:15）。
+・<hl>重點概念與專有名詞</hl>：列出影片出現的自然科名詞，<hl>每個都用國小生聽得懂的白話解釋</hl>（例：光合作用（植物用陽光自己做養分））。
+・<hl>（若是實驗）</hl>實驗器材清單（含數量）＋實驗步驟（條列）＋<hl>安全注意事項</hl>。
+・<hl>（若是觀察／生態／現象）</hl>觀察重點、特徵或變化過程、可連結的生活例子。
+・科學原理說明（2–3 句，用學生能懂的語言）。
+・觀察／思考記錄表（3–5 題，讓學生填寫或討論）。
+
+請用條列式呈現，方便老師直接印出發給學生；<hl>沒出現的項目可省略，不要硬湊</hl>。
+
+<mark>【時間戳格式】</mark>每個影片時間點，請<hl>只用純文字</hl>標示 [分:秒]（例如 00:55），<hl>不要附上任何網址、超連結或引用來源</hl>，尤其<hl>絕對不要出現 google.com/search 開頭的網址</hl>。畫面只留乾淨的時間，老師看到時間自己把影片拖到該處即可。
+
+<mark>【語言要求】</mark>對象是<hl>國小生</hl>，請全程使用簡單白話文。<hl>自然科專有名詞一律加括號白話說明</hl>（例：蒸發（水變成水蒸氣跑掉）、食物鏈（誰吃誰的關係））；動詞要具體（例：「慢慢倒入」而非「加入」）。
+
+<mark>【檔名建議】</mark>請在輸出的<hl>最前面加一行檔名</hl>，格式：<hl>【科目】課名_YYYYMMDD</hl>（例：【社會】東港迎王_20260605），方便我命名與搜尋。</pre>
+            </div>
+            <div class="subj-panel prompt-box" id="panel-soc" style="display:none">
+              <button class="copy-btn" data-target="p-soc" aria-label="複製指令">⧉ 複製</button>
+              <pre id="p-soc">你是一位社會科教學助理。
+
+<mark>【任務】</mark>我會提供一段 YouTube 社會科教學影片（已用 @YouTube 連入），內容可能是<hl>歷史、地理、公民、經濟或文化</hl>。請<hl>依影片性質</hl>，幫我整理成課堂可用的格式。
+
+<mark>【輸出格式】</mark>
+・第一行：📹 <hl>影片來源：影片標題 + 完整 YouTube 網址</hl>
+・<hl>核心內容摘要</hl>：先用<hl>子彈筆記</hl>整理影片重點；若為教學內容，請拆成 <hl>Step-by-Step 步驟清單</hl>，每步前標上時間（如 02:15）。
+・影片主題摘要（<hl>人物 / 地點 / 事件</hl>，2–3 句）
+・<hl>重點整理</hl>：（若是歷史）時間軸與年代；（若是地理）地點與位置；（若是公民／經濟／文化）核心概念與生活關聯
+・<hl>重點名詞解釋</hl>：把社會科專有名詞用國小生白話解釋（例：民主（大家投票決定事情）、季風（固定季節吹來的風））
+・3 個<hl>課堂討論問題</hl>（由淺入深，引導學生思考）
+・課後延伸思考（1 題，連結生活經驗）
+
+請用條列式呈現，方便老師帶領課堂討論。
+
+請<hl>依影片實際內容彈性調整</hl>，上述項目<hl>沒出現的可省略、不要硬湊</hl>。
+
+<mark>【時間戳格式】</mark>每個影片時間點，請<hl>只用純文字</hl>標示 [分:秒]（例如 00:55），<hl>不要附上任何網址、超連結或引用來源</hl>，尤其<hl>絕對不要出現 google.com/search 開頭的網址</hl>。畫面只留乾淨的時間，老師看到時間自己把影片拖到該處即可。
+
+<mark>【語言要求】</mark>對象是<hl>國小生</hl>，請全程使用簡單白話文。<hl>歷史或地理詞彙若必要，請加括號解釋</hl>（例：清朝（很久以前的一個朝代））；討論問題要用日常語言，讓學生敢開口回答。
+
+<mark>【檔名建議】</mark>請在輸出的<hl>最前面加一行檔名</hl>，格式：<hl>【科目】課名_YYYYMMDD</hl>（例：【社會】東港迎王_20260605），方便我命名與搜尋。</pre>
+            </div>
+            <div class="subj-panel prompt-box" id="panel-math" style="display:none">
+              <button class="copy-btn" data-target="p-math" aria-label="複製指令">⧉ 複製</button>
+              <pre id="p-math">你是一位數學教學助理。
+
+<mark>【任務】</mark>我會提供一段 YouTube 數學教學影片（已用 @YouTube 連入），內容可能是<hl>計算、概念、幾何或統計</hl>。請<hl>依影片性質</hl>，幫我整理成國小課堂可用的格式。
+
+<mark>【輸出格式】</mark>
+・第一行：📹 <hl>影片來源：影片標題 + 完整 YouTube 網址</hl>
+・<hl>核心內容摘要</hl>：先用<hl>子彈筆記</hl>整理影片重點；若為教學內容，請拆成 <hl>Step-by-Step 步驟清單</hl>，每步前標上時間（如 02:15）。
+・本課數學概念（1–2 句白話說明「這在講什麼」）
+・<hl>解題步驟</hl>（逐步條列，每步不超過 2 行，加上「為什麼這樣做」）
+・<hl>常見錯誤提示</hl>（學生最容易在哪裡出錯）
+・隨堂練習題 3 題（由簡單到難，附答案）
+
+請<hl>依影片實際內容彈性調整</hl>，上述項目<hl>沒出現的可省略、不要硬湊</hl>。
+
+<mark>【時間戳格式】</mark>每個影片時間點，請<hl>只用純文字</hl>標示 [分:秒]（例如 00:55），<hl>不要附上任何網址、超連結或引用來源</hl>，尤其<hl>絕對不要出現 google.com/search 開頭的網址</hl>。畫面只留乾淨的時間，老師看到時間自己把影片拖到該處即可。
+
+<mark>【語言要求】</mark>對象是<hl>國小生</hl>，全程使用簡單白話文。數學術語若必要請加括號說明（例：分母（下面的數字））；步驟說明要像在跟小朋友說話，不要太正式。
+
+<mark>【檔名建議】</mark>請在輸出的<hl>最前面加一行檔名</hl>，格式：<hl>【科目】課名_YYYYMMDD</hl>（例：【社會】東港迎王_20260605），方便我命名與搜尋。</pre>
+            </div>
+            <div class="subj-panel prompt-box" id="panel-chi" style="display:none">
+              <button class="copy-btn" data-target="p-chi" aria-label="複製指令">⧉ 複製</button>
+              <pre id="p-chi">你是一位國語教學助理。
+
+<mark>【任務】</mark>我會提供一段 YouTube 國語教學影片（已用 @YouTube 連入），內容可能是<hl>課文、閱讀、寫作、修辭或古詩</hl>。請<hl>依影片性質</hl>，幫我整理成國小課堂可用的格式。
+
+<mark>【輸出格式】</mark>
+・第一行：📹 <hl>影片來源：影片標題 + 完整 YouTube 網址</hl>
+・<hl>核心內容摘要</hl>：先用<hl>子彈筆記</hl>整理影片重點；若為教學內容，請拆成 <hl>Step-by-Step 步驟清單</hl>，每步前標上時間（如 02:15）。
+・課文／故事主題（1 句白話說明「這在講什麼」）
+・<hl>重點生字詞整理</hl>（含注音、簡單解釋、造句各 1 例）
+・課文重點段落摘要（條列，每點 1–2 句）
+・課堂討論問題 3 題（由淺入深）
+・<hl>重點名詞解釋</hl>：若出現修辭或語文術語，用白話解釋（例：譬喻（把一個東西比喻成另一個東西））
+
+請<hl>依影片實際內容彈性調整</hl>，上述項目<hl>沒出現的可省略、不要硬湊</hl>。
+
+<mark>【時間戳格式】</mark>每個影片時間點，請<hl>只用純文字</hl>標示 [分:秒]（例如 00:55），<hl>不要附上任何網址、超連結或引用來源</hl>，尤其<hl>絕對不要出現 google.com/search 開頭的網址</hl>。畫面只留乾淨的時間，老師看到時間自己把影片拖到該處即可。
+
+<mark>【語言要求】</mark>對象是<hl>國小生</hl>，全程使用簡單白話文，造句和解釋要貼近日常生活，讓學生覺得親切好懂。
+
+<mark>【檔名建議】</mark>請在輸出的<hl>最前面加一行檔名</hl>，格式：<hl>【科目】課名_YYYYMMDD</hl>（例：【社會】東港迎王_20260605），方便我命名與搜尋。</pre>
+            </div>
+            <div class="subj-panel prompt-box" id="panel-eng" style="display:none">
+              <button class="copy-btn" data-target="p-eng" aria-label="複製指令">⧉ 複製</button>
+              <pre id="p-eng">你是一位英語教學助理。
+
+<mark>【任務】</mark>我會提供一段 YouTube 英語教學影片（已用 @YouTube 連入），內容可能是<hl>單字、句型、會話或發音</hl>。請<hl>依影片性質</hl>，幫我整理成國小課堂可用的格式。
+
+<mark>【輸出格式】</mark>
+・第一行：📹 <hl>影片來源：影片標題 + 完整 YouTube 網址</hl>
+・<hl>核心內容摘要</hl>：先用<hl>子彈筆記</hl>整理影片重點；若為教學內容，請拆成 <hl>Step-by-Step 步驟清單</hl>，每步前標上時間（如 02:15）。
+・<hl>本課重點單字</hl>（中英對照，附簡單例句）
+・<hl>重點句型 2–3 個</hl>（附中文說明和替換練習）
+・課堂口說活動建議（讓學生開口練習的方式）
+・小提醒（發音或常見混淆點）
+
+請<hl>依影片實際內容彈性調整</hl>，上述項目<hl>沒出現的可省略、不要硬湊</hl>。
+
+<mark>【時間戳格式】</mark>每個影片時間點，請<hl>只用純文字</hl>標示 [分:秒]（例如 00:55），<hl>不要附上任何網址、超連結或引用來源</hl>，尤其<hl>絕對不要出現 google.com/search 開頭的網址</hl>。畫面只留乾淨的時間，老師看到時間自己把影片拖到該處即可。
+
+<mark>【語言要求】</mark>對象是<hl>國小生</hl>，中文說明全程使用白話文；英文部分保留原文，旁邊加中文解釋，<hl>讓學生不害怕英文</hl>。
+
+<mark>【檔名建議】</mark>請在輸出的<hl>最前面加一行檔名</hl>，格式：<hl>【科目】課名_YYYYMMDD</hl>（例：【社會】東港迎王_20260605），方便我命名與搜尋。</pre>
+            </div>
+            <div class="subj-panel prompt-box" id="panel-mus" style="display:none">
+              <button class="copy-btn" data-target="p-mus" aria-label="複製指令">⧉ 複製</button>
+              <pre id="p-mus">你是一位音樂教學助理。
+
+<mark>【任務】</mark>我會提供一段 YouTube 音樂教學影片（已用 @YouTube 連入），內容可能是<hl>聆聽鑑賞、歌唱、樂器演奏或樂理</hl>。請<hl>依影片性質</hl>，幫我整理成國小課堂可用的格式。
+
+<mark>【輸出格式】</mark>
+・第一行：📹 <hl>影片來源：影片標題 + 完整 YouTube 網址</hl>
+・<hl>核心內容摘要</hl>：先用<hl>子彈筆記</hl>整理影片重點；若為教學內容，請拆成 <hl>Step-by-Step 步驟清單</hl>，每步前標上時間（如 02:15）。
+・曲目資訊（曲名、作曲家、年代，用 1 句白話說明背景）
+・<hl>音樂特色重點</hl>（節拍、主要樂器、情緒感受，條列說明）
+・<hl>聆聽重點提示</hl>（請學生特別注意什麼，2–3 個）
+・課堂活動建議（律動、哼唱、節拍拍手等，1–2 個）
+
+請<hl>依影片實際內容彈性調整</hl>，上述項目<hl>沒出現的可省略、不要硬湊</hl>。
+
+<mark>【時間戳格式】</mark>每個影片時間點，請<hl>只用純文字</hl>標示 [分:秒]（例如 00:55），<hl>不要附上任何網址、超連結或引用來源</hl>，尤其<hl>絕對不要出現 google.com/search 開頭的網址</hl>。畫面只留乾淨的時間，老師看到時間自己把影片拖到該處即可。
+
+<mark>【語言要求】</mark>對象是<hl>國小生</hl>，全程使用簡單白話文，音樂術語加括號說明（例：節拍（音樂的拍子，像心跳一樣））。
+
+<mark>【檔名建議】</mark>請在輸出的<hl>最前面加一行檔名</hl>，格式：<hl>【科目】課名_YYYYMMDD</hl>（例：【社會】東港迎王_20260605），方便我命名與搜尋。</pre>
+            </div>
+          </div>
+        </div>
+        <div class="export-tip">
+          <span class="et-icon">📄</span>
+          <div>
+            <b>★ 推薦做法：匯出到 Google 文件</b><br>
+            AI 生成結果後，點回應右下角「<b>⋯ 更多</b>」→「<b>匯出到 Google 文件</b>」。材料清單、步驟表、討論問題都會完整保存在你的雲端硬碟，方便列印或共享。<b>下次同樣的課直接開文件，不用再問 AI 一次。</b>
+          </div>
+        </div>
+        <div class="limit-note">
+          <span class="ln-icon">⚠️</span>
+          <div>
+            <b>關於影片時間點，先講清楚</b>
+            <div class="ln-row"><span class="ln-num">①</span><span><b>為什麼只放時間、不放連結？</b>Gemini 的影片引用機制會自動把連結包成「<b>google.com/search</b>」的一長串雜亂網址，很難完全擋掉、點了也常出錯。所以指令改成<b>「只顯示乾淨的時間（如 00:55）」</b>——看到時間，自己把影片進度條拖到該處即可，畫面最清爽。</span></div>
+            <div class="ln-row"><span class="ln-num">②</span><span><b>時間為什麼有時不準？</b>AI 要抓準時間，必須讀得到影片的<b>字幕與時間軸</b>。若影片是<b>私人／不公開</b>或<b>沒有字幕（CC）</b>，時間只能用猜的。<br><b>解法：</b>選「<b>公開 + 有字幕</b>」的影片，時間才會準。</span></div>
+          </div>
+        </div>
+      </details>
+      </div>
+      
+    </div>
+
+    <div class="tblock" id="t1200" style="--t:#0e9aa3">
+      <div class="tb-head"><span class="tb-time">12:00</span><span class="tb-phase">午休大作戰 🧋</span></div>
+      <div class="tb-scene">大熱天的透心涼神救援，揪團點餐不崩潰</div>
+      <div class="case-box" style="margin-bottom:12px">
+        <div class="case-title">🧪 研習練習工具：模擬訂購對話</div>
+        <p style="font-size:13.5px;color:#5a4a7a;margin:.2em 0 .7em">因沒有現成的 LINE 對話？用模擬頁面的一段<b>飲料／保健品訂購對話</b>，先複製，再貼給下面的統計技能試試看。</p>
+        <a class="tb-link" href="https://wordinline.netlify.app/" target="_blank" rel="noopener">▶ 開啟模擬訂購對話練習頁 ↗</a>
+      </div>
+      <div class="tb-cards">
+        <div class="pcard"><div class="ph"><span class="badge">實戰 1</span><span class="label">飲料揪團統計</span></div>
+          <p>解決辦公室 LINE 群組訂飲料「微糖去冰換燕麥奶」亂成一團的痛點。將雜亂對話全貼給 AI，一秒轉成完美統計表格（甜度、冰塊、總杯數），優雅送出夏日救贖。</p></div>
+        <details class="inline-prompt">
+        <summary class="ip-title">📋 可直接複製的指令 —「飲料訂單整理」</summary>
+        <div class="prompt-layout">
+          <div class="steps-box">
+            <div class="sb-title">🛠️ 實作步驟</div>
+            <ol>
+              <li>在側邊欄輸入 <span class="code">/</span> → 選「<b>＋ 加入技能</b>」，命名「<b>飲料訂單整理</b>」</li>
+              <li>指令貼上右側文字 → 儲存</li>
+              <li>把 LINE 群組對話貼進 Gemini，按 <span class="code">/</span> 呼叫此技能</li>
+              <li>一秒生出整合表：上面對帳、下面給店家 ✨</li>
+            </ol>
+          </div>
+          <div class="prompt-box">
+            <button class="copy-btn" data-target="p-drink-inline" aria-label="複製指令">⧉ 複製</button>
+            <pre id="p-drink-inline">你是一位幫大家訂飲料的好幫手。
+
+<mark>【任務】</mark>當大家在 LINE 群組對話訂完飲料，我會把對話貼給你。請統整成<hl>同一張表格</hl>，分成上下兩段。
+
+<mark>【上半部：個人明細】</mark>每人一列，欄位：訂購人、品項、甜度、冰塊、杯數、備註。（這段用來<hl>對帳、檢查有沒有訂錯</hl>）
+
+<mark>【分隔列】</mark>中間插一列分隔，例如「──── 以下為給店家的訂單 ────」。
+
+<mark>【下半部：給店家訂單】</mark>把<hl>相同品項（同甜度、同冰塊）合併</hl>，欄位：品項、甜度、冰塊、總杯數。（這段<hl>直接給店家下單</hl>）
+
+最後加一列「<hl>合計</hl>」算出<hl>總杯數</hl>，並在表格下方寫出「<hl>總共 ○ 杯</hl>」，上下兩段杯數要一致。
+
+<mark>【注意事項】</mark>
+・同一人若改過訂單，<hl>以最後一次為準</hl>。
+・甜度／冰塊沒寫的，標示「<hl>(未填)</hl>」提醒我追問。
+・換燕麥奶、加料等需求，寫進「備註」欄。
+
+請<hl>只輸出這一張表格</hl>，不要多餘說明。
+
+<mark>【檔名建議】</mark>請在輸出的<hl>最前面加一行檔名</hl>，格式：<hl>【飲料訂單】YYYYMMDD</hl>（例：【飲料訂單】20260605），方便我命名與搜尋。</pre>
+          </div>
+        </div>
+      </details>
+        <div class="pcard"><div class="ph"><span class="badge">實戰 2</span><span class="label">保健品團購</span></div>
+          <p>團購保健品最怕算錯錢。把 LINE 訂購對話貼給 AI，自動統計每人品項、數量，<b>重點是把金額算清楚</b>——誰該付多少、總共多少，一目了然不漏收。</p></div>
+        <details class="inline-prompt" style="margin-top:10px">
+        <summary class="ip-title">📋 可直接複製的指令 —「保健品團購統計」</summary>
+        <div class="prompt-layout">
+          <div class="steps-box">
+            <div class="sb-title">🛠️ 實作步驟</div>
+            <ol>
+              <li>在側邊欄輸入 <span class="code">/</span> → 選「<b>＋ 加入技能</b>」，命名「<b>保健品團購統計</b>」</li>
+              <li>指令貼上右側文字 → 儲存</li>
+              <li>把 LINE 團購對話貼進 Gemini，按 <span class="code">/</span> 呼叫此技能</li>
+              <li>一秒算出「誰該付多少 + 總金額」💰</li>
+            </ol>
+          </div>
+          <div class="prompt-box">
+            <button class="copy-btn" data-target="p-groupbuy" aria-label="複製指令">⧉ 複製</button>
+            <pre id="p-groupbuy">你是一位細心的團購小幫手，最擅長把錢算清楚。
+
+<mark>【任務】</mark>當大家在 LINE 群組對話完成保健品團購，我會把對話貼給你。請統整成<hl>同一張表格</hl>，分成上下兩段，<hl>重點是把金額算清楚</hl>。
+
+<mark>【上半部：個人明細（收錢用）】</mark>請<hl>依訂購人分組</hl>，把同一位老師的所有品項列在一起；每列欄位：訂購人、品項、單價、數量、小計金額。每位老師的品項列完後，<hl>緊接一列「○○○ 小計：共 ○ 件，應付 $○」</hl>，清楚標出這位老師要付多少，方便逐一收錢。
+
+<mark>【分隔列】</mark>中間插一列分隔，例如「──── 以下為給廠商的訂單 ────」。
+
+<mark>【下半部：給廠商訂單】</mark>把<hl>相同品項合併</hl>，欄位：品項、單價、總數量、<hl>金額小計</hl>。
+
+最後加一列「<hl>總計</hl>」算出<hl>總數量與總金額</hl>，並在表格下方寫出「<hl>總共 ○ 件，金額 $○</hl>」。上下兩段金額要一致。
+
+<mark>【注意事項】</mark>
+・同一人若改過訂單，<hl>以最後一次為準</hl>。
+・沒寫數量的，預設 1 並標示「<hl>(未確認)</hl>」。
+・單價對話中有提到就帶入；沒提到標示「<hl>$?</hl>」提醒我補價格。
+
+請<hl>只輸出這一張表格</hl>，不要多餘說明。
+
+<mark>【檔名建議】</mark>請在輸出的<hl>最前面加一行檔名</hl>，格式：<hl>【保健品團購】YYYYMMDD</hl>（例：【保健品團購】20260605），方便我命名與搜尋。</pre>
+          </div>
+        </div>
+      </details>
+      </div>
+      
+      
+    </div>
+
+    <div class="tblock" id="t1400" style="--t:#e96a25">
+      <div class="tb-head"><span class="tb-time">14:00</span><span class="tb-phase">活動宣傳與視覺教材 🎨</span></div>
+      <div class="tb-scene">用 AI 把活動、課文變成圖片與簡報</div>
+      <div class="tb-cards">
+        <div class="pcard"><div class="ph"><span class="badge">實戰 1</span><span class="label">Chrome 側邊欄出圖王（Nano Banana）</span></div>
+          <p>用 Chrome 內建的 <b>Nano Banana</b>，把<b>學校活動</b>和<b>電子書／課文內容</b>變成圖片教材：<br>① <b>學校活動</b> → 生通知海報、宣導四格漫畫。<br>② <b>電子書／課文</b> → 讓它讀目前看的這頁，一鍵畫成<b>心智圖、資訊圖表</b>當上課素材。<br>在側邊欄描述一下，免開新分頁、免設計軟體，圖片直接到手。</p></div>
+        <div class="case-box">
+          <div class="case-title">📚 三大教科書電子書（開課本頁面來試）</div>
+          <p style="font-size:13.5px;color:#5a4a7a;margin:.2em 0 .7em">打開你用的版本、翻到要上的那一課（網頁版電子書），就能讓 Nano Banana <b>讀當前頁面</b>畫成心智圖／資訊圖表。<b>需用教師或教育雲端帳號登入。</b></p>
+          <a class="tb-link" href="https://digitalmaster.knsh.com.tw/" target="_blank" rel="noopener">▶ 康軒（數位高手）↗</a>
+          <a class="tb-link" href="https://edisc3.hle.com.tw/" target="_blank" rel="noopener">▶ 翰林（行動大師3）↗</a>
+          <a class="tb-link" href="https://reader.oneclass.com.tw/bookstore" target="_blank" rel="noopener">▶ 南一（NaniBook 書城）↗</a>
+        </div>
+        <details class="inline-prompt" style="margin-top:10px">
+        <summary class="ip-title">📋 Chrome 側邊欄 Nano Banana 生圖指令（選類型 → 複製）</summary>
+        <div class="subj-tabs">
+          <button class="stab active" data-panel="panel-poster">🖼️ 通知海報</button>
+          <button class="stab" data-panel="panel-mind">🧠 心智圖</button>
+          <button class="stab" data-panel="panel-info">📊 資訊圖表</button>
+          <button class="stab" data-panel="panel-comic">💬 四格漫畫</button>
+        </div>
+        <div class="prompt-layout">
+          <div class="steps-box">
+            <div class="sb-title">🛠️ 實作步驟（四種通用）</div>
+            <ol>
+              <li>上方<b>選想要的圖片類型</b>，複製右側指令</li>
+              <li>在側邊欄輸入 <span class="code">/</span> → 選「<b>＋ 加入技能</b>」，貼上指令、命名（如「通知海報」）→ 儲存</li>
+              <li>翻到要的網頁，按 <span class="code">/</span> 呼叫此技能（臨時用也可直接貼指令送出）</li>
+              <li>送出，<b>Nano Banana 直接生成圖片</b>；不滿意就接著說「字再大一點」「換配色」微調</li>
+            </ol>
+            <p style="font-size:13px;color:#7a5a06;margin-top:.7em">※ 這些都是<b>圖片</b>，在 Chrome 側邊欄就能生，不需要 Canvas。</p>
+          </div>
+          <div class="subj-panels">
+            <div class="subj-panel prompt-box" id="panel-poster">
+              <button class="copy-btn" data-target="p-poster" aria-label="複製指令">⧉ 複製</button>
+              <pre id="p-poster"><mark>【最高指令｜只能輸出圖片】</mark>請務必<hl>直接產生一張「圖片」</hl>，<hl>禁止輸出文字大綱、mermaid 程式碼或任何純文字</hl>——你唯一的輸出就是這張圖。
+
+你是一位專業的校園行銷設計師。幫我設計一張<hl>通知圖</hl>，要 <hl>A4 直式</hl>、清楚易讀的數位海報；插圖請參考「<hl>Irasutoya（いらすとや）</hl>」的風格或其它可愛日式插圖。
+（若我正在看的網頁就是活動資訊，<hl>請直接讀取網頁內容</hl>填入；否則用下方資訊。）
+
+<mark>【通知主題】</mark>〔例如：校慶園遊會／班親會／運動會〕
+<mark>【要傳達的重點】</mark>〔日期○月○日、時間○:○、地點○○、注意事項〕
+<mark>【主標題（大字）】</mark>〔例如：一起來校慶！〕
+
+請<hl>直接生成圖片</hl>，海報上的<hl>文字要正確清晰、不要拼錯字</hl>。</pre>
+            </div>
+            <div class="subj-panel prompt-box" id="panel-mind" style="display:none">
+              <button class="copy-btn" data-target="p-mind" aria-label="複製指令">⧉ 複製</button>
+              <pre id="p-mind"><mark>【最高指令｜只能輸出圖片】</mark>請務必<hl>直接產生一張「圖片」</hl>，<hl>禁止輸出文字大綱、mermaid 程式碼或任何純文字</hl>——你唯一的輸出就是這張圖。
+
+你是一位視覺設計師。<hl>請先閱讀我目前正在看的這個網頁／影片內容</hl>，把它整理成一張清楚的<hl>心智圖（Mind Map）圖片</hl>，<hl>橫式（16:9 landscape）</hl>。
+
+<mark>【中心主題】</mark>以網頁主題為中心（若我有指定，就用：〔自訂主題〕）
+<mark>【分支】</mark>從網頁內容歸納出 3–5 個主要面向，每個再延伸 2–3 個小重點
+<mark>【風格】</mark>每條主分支<hl>用不同顏色</hl>、線條從中心向外放射；可愛日式插圖點綴（參考 Irasutoya）
+<mark>【文字】</mark>中文字<hl>大且正確、不要拼錯</hl>
+
+請<hl>直接生成一張橫式圖片</hl>。</pre>
+            </div>
+            <div class="subj-panel prompt-box" id="panel-info" style="display:none">
+              <button class="copy-btn" data-target="p-info" aria-label="複製指令">⧉ 複製</button>
+              <pre id="p-info"><mark>【最高指令｜只能輸出圖片】</mark>請務必<hl>直接產生一張「圖片」</hl>，<hl>禁止輸出文字大綱、mermaid 程式碼或任何純文字</hl>——你唯一的輸出就是這張圖。
+
+你是一位資訊圖表設計師。<hl>請先閱讀我目前正在看的這個網頁／影片內容</hl>，把重點整理成一張<hl>資訊圖表（Infographic）圖片</hl>，<hl>橫式（16:9 landscape）</hl>。
+
+<mark>【主題】</mark>以網頁主題為準（若我有指定，就用：〔自訂主題〕）
+<mark>【要呈現的重點】</mark>從網頁內容歸納出 3–6 個重點（可附數字或步驟）
+<mark>【風格】</mark>直式、<hl>圖示搭配短文字</hl>、色彩明亮，適合張貼或投影；參考 Irasutoya 可愛插圖
+<mark>【文字】</mark>中文字<hl>大且正確、不要拼錯</hl>
+
+請<hl>直接生成圖片</hl>。</pre>
+            </div>
+            <div class="subj-panel prompt-box" id="panel-comic" style="display:none">
+              <button class="copy-btn" data-target="p-comic" aria-label="複製指令">⧉ 複製</button>
+              <pre id="p-comic"><mark>【最高指令｜只能輸出圖片】</mark>請務必<hl>直接產生一張「圖片」</hl>，<hl>禁止輸出文字大綱、mermaid 程式碼或任何純文字</hl>——你唯一的輸出就是這張圖。
+
+你是一位漫畫家。<hl>請先閱讀我目前正在看的這個網頁／影片內容</hl>，把它的核心概念畫成<hl>可愛的四格漫畫</hl>（給國小生看），<hl>橫式（16:9 landscape）、四格橫向排列</hl>。
+
+<mark>【情境／主題】</mark>取自網頁內容（若我有指定，就用：〔自訂情境，例如走廊不奔跑〕）
+<mark>【格數】</mark>四格，依序呈現<hl>起承轉合</hl>
+<mark>【角色與風格】</mark>可愛的學生角色，<hl>日式可愛插圖風格（參考 Irasutoya）</hl>
+<mark>【對白】</mark>簡單白話的中文，字<hl>大且正確</hl>
+<mark>【用途】</mark>班級宣導或教學素材
+
+請<hl>直接生成圖片</hl>。</pre>
+            </div>
+          </div>
+        </div>
+      </details>
+      </div>
+      <div class="export-tip" style="background:linear-gradient(120deg,#fff0e6,#fff8f2);border-color:#f0c2a0;border-left-color:#e96a25">
+        <span class="et-icon">💡</span>
+        <div style="color:#7a3e12">
+          <b style="color:#9a4a14">兩個最實用的場景</b><br>
+          <b>① 學校活動</b>：要辦校慶、班親會 → 生通知海報、宣導漫畫。<br>
+          <b>② 電子書／課文</b>：翻到課本某頁、某篇文章 → 讓 Nano Banana <b>讀當前網頁</b>，一鍵畫成心智圖、資訊圖表，直接當上課素材。
+        </div>
+      </div>
+        <div class="pcard"><div class="ph"><span class="badge">實戰 2</span><span class="label">一鍵生成教學簡報</span></div>
+          <p>更狂的是——側邊欄直接下「<b>把這個做成投影片</b>」，Gemini 會在畫面中央<b>生出一整份簡報</b>（含封面、章節、示意圖），預覽滿意後點「<b>匯出成簡報</b>」存成 Google 簡報。讀課文那頁 → 秒出上課簡報。</p></div>
+        <div class="case-box">
+          <div class="case-title">🏫 拿學校公告來試生簡報</div>
+          <p style="font-size:13.5px;color:#5a4a7a;margin:.2em 0 .7em">打開這則大橋國小公告 → 按 <span class="code">/</span> 呼叫「一鍵生成簡報」，看 AI 把公告變成一份可上台報告的簡報。</p>
+          <a class="tb-link" href="https://www.dcps.tn.edu.tw/modules/school/index.php?department_id=3&zone_id=0&page_id=13&content_id=196&type=news&from_op=all_news" target="_blank" rel="noopener">▶ 大橋國小公告（範例）↗</a>
+        </div>
+        <details class="inline-prompt" style="margin-top:10px">
+        <summary class="ip-title">📋 可直接複製的指令 —「一鍵生成簡報」</summary>
+        <div class="prompt-layout">
+          <div class="steps-box">
+            <div class="sb-title">🛠️ 實作步驟</div>
+            <ol>
+              <li>在側邊欄輸入 <span class="code">/</span> → 選「<b>＋ 加入技能</b>」，命名「<b>一鍵生成簡報</b>」→ 儲存</li>
+              <li>打開要做成簡報的<b>網頁／課文頁</b>（或直接貼上內容）</li>
+              <li>按 <span class="code">/</span> 呼叫，Gemini 在<b>畫面中央生出簡報</b>，可逐頁預覽</li>
+              <li>要改再說「<b>第 3 張改成…</b>」；滿意後點「<b>匯出成簡報</b>」存成 Google 簡報 ✅</li>
+            </ol>
+            <p style="font-size:13px;color:#7a5a06;margin-top:.7em">※ 簡報在 Gemini 中生成，可一直追問調整；匯出後即是<b>可編輯的 Google 簡報</b>。</p>
+          </div>
+          <div class="prompt-box">
+            <button class="copy-btn" data-target="p-slides" aria-label="複製指令">⧉ 複製</button>
+            <pre id="p-slides">請把<hl>我目前正在看的這個網頁／影片內容</hl>（或我貼上的內容）<hl>做成一份簡報</hl>。
+
+<mark>【對象】</mark>〔例如：國小五年級學生／全校教師晨會〕
+<mark>【主題聚焦】</mark>〔可留空讓你自動抓重點，或填我想強調的部分〕
+
+<mark>【內容結構】</mark>
+・自動規劃章節，分成<hl>約 8～14 張</hl>投影片。
+・<hl>穿插不同版型避免單調</hl>：封面 → 目錄 → 章節分隔頁 → 內容頁 → 數據／圖表頁 → 金句頁 → 最後重點回顧。
+・每張：清楚標題 + 條列重點（<hl>每頁最多 5～6 點、每點一行</hl>，避免整段文字）。
+
+<mark>【版面與配色（要好看，重點）】</mark>
+・選一組<hl>協調色系</hl>：1 個主色 + 1 個輔助色 + 中性底色（深底或淺底擇一，<hl>全簡報一致</hl>）。
+・建立清楚<hl>字級層級</hl>：大標題＞小標＞內文＞註解，全簡報<hl>統一字體</hl>。
+・善用<hl>留白與對齊</hl>，重點用色塊或色字強調，不要塞滿。
+・適時加入<hl>示意圖、icon 或簡單資訊圖表</hl>輔助說明，圖文平衡。<hl>插圖一律用簡單、扁平的「向量圖示／SVG 風格」</hl>（線條乾淨的 icon、幾何圖形），<hl>不要寫實人物、不要真實照片、不要任何品牌或卡通／名人角色</hl>（避免版權與不相關圖片）。可參考可愛日式扁平插畫的簡潔感，整份風格一致。
+
+<mark>【文字顯示（很重要）】</mark>
+・所有中文<hl>務必用可正常顯示的系統字體「打字呈現」</hl>，<hl>絕對不要把中文做成圖片或藝術字</hl>——那常會變成亂碼、黑方塊或缺字。
+・標題與內文都要<hl>清楚、完整、不缺字</hl>；若某字無法正常顯示，請換字或改用文字方塊重打。
+・整體風格：簡潔、現代、對比清楚〔可指定：教育活潑／商務專業／文青手感〕。
+
+<mark>【檔名建議】</mark>簡報標題請用格式：<hl>【簡報】主題_YYYYMMDD</hl>（例：【簡報】東港迎王_20260605），方便我命名與搜尋。
+
+完成後請<hl>直接「匯出成簡報」</hl>；若某頁要改，我再說「第 N 張改成…」。</pre>
+          </div>
+        </div>
+      </details>
+      
+    </div>
+
+    <div class="tblock" id="t1500" style="--t:#e26a1c">
+      <div class="tb-head"><span class="tb-time">15:00</span><span class="tb-phase">進修充電與收尾 📚</span></div>
+      <div class="tb-scene">研習測驗找答案，評語一鍵生成</div>
+      <div class="tb-cards">
+        <div class="pcard"><div class="ph"><span class="badge">實戰 1</span><span class="label">進修好幫手</span></div>
+          <p>研習後的線上測驗，讓 <b>Gemini in Chrome 讀當前測驗網頁</b>，<b>逐題給答案與簡短說明</b>，快速完成、準時下班。</p>
+          <a class="tb-link" href="https://moocs.moe.edu.tw/" target="_blank" rel="noopener">▶ 前往教育部磨課師研習平台 ↗</a></div>
+        <details class="inline-prompt">
+        <summary class="ip-title">📋 可直接複製的指令 —「進修測驗好幫手」</summary>
+        <div class="prompt-layout">
+          <div class="steps-box">
+            <div class="sb-title">🛠️ 實作步驟</div>
+            <ol>
+              <li>在側邊欄輸入 <span class="code">/</span> → 選「<b>＋ 加入技能</b>」，命名「<b>進修測驗好幫手</b>」→ 儲存</li>
+              <li>打開研習的<b>線上測驗頁面</b></li>
+              <li>按 <span class="code">/</span> 呼叫此技能，AI 逐題給答案與說明</li>
+              <li>核對後完成測驗 ✅</li>
+            </ol>
+            <p style="font-size:13px;color:#7a5a06;margin-top:.7em">※ AI 讀的是「<b>當前測驗網頁</b>」的題目；答案<b>送出前自己再確認一下</b>，AI 也會出錯。</p>
+          </div>
+          <div class="prompt-box">
+            <button class="copy-btn" data-target="p-quiz" aria-label="複製指令">⧉ 複製</button>
+            <pre id="p-quiz">請閱讀<hl>我目前正在看的這個測驗網頁</hl>，幫我作答。
+
+<mark>【任務】</mark>針對頁面上的每一道題目，逐題給出：
+・<hl>答案</hl>
+・<hl>簡單說明</hl>（一兩句即可）
+
+<mark>【格式】</mark>用「第 N 題：答案 → 說明」逐題列出，簡潔清楚。</pre>
+          </div>
+        </div>
+      </details>
+        <div class="pcard"><div class="ph"><span class="badge">實戰 2</span><span class="label">AI 專屬評語生成小幫手</span></div>
+          <p>把你<b>以前寫過的評語</b>丟給它<b>學習你的風格</b>，再依每位學生的特質生成評語——不是冷冰冰的套版，而是延續你的語氣、寫出<b>有溫度、看得見師生情感</b>的話，讓每個孩子都被真正「看見」。</p>
+          <p style="margin-top:.6em">💡 <b>搭配口語輸入法（EzType）更省力</b>：用<b>講的</b>口述每位學生的印象與重點，直接變文字丟進範本，連打字都省了。</p>
+          <a class="tb-link" href="https://gemini.google.com/share/62e4fb735bef" target="_blank" rel="noopener">▶ 開啟 AI 專屬評語生成小幫手 ↗</a>
+          <a class="tb-link" href="https://home.myhpcloud.com/acs/fileshare/?shareToken=ay9MNXorNW16VEx3MVUwMlBkY0V6UT09OjpIRjZwaytNS2UzelFZbm5pcjdwVnZ3PT06OlV0U0daTk43eWhGODFNL09QQWhKUFE9PQ==" target="_blank" rel="noopener">▶ 取得口語輸入法 EzType ↗</a>
+          <details class="eztype-help">
+            <summary>📖 EzType 使用說明（點開）</summary>
+            <div class="ez-body">
+              <p class="ez-intro">EzType 讓你「<b>按住快捷鍵說話、放開就自動把整理好的繁體中文打到游標位置</b>」。</p>
+
+              <h4>■ 第一次使用</h4>
+              <ol>
+                <li>雙擊「<b>EzType.exe</b>」啟動。<br><span class="ez-note">※ 若跳出 Windows「不明發行者」警告：點「更多資訊」→「仍要執行」（這是未簽章自製程式的正常提醒，不是病毒）。</span></li>
+                <li>第一次會自動開啟設定視窗，先<b>申請免費金鑰</b>：點上方「免費申請 Groq 金鑰（教學）」→ 把 <span class="code">gsk_</span> 開頭的金鑰貼到「Groq 金鑰」欄 → 可按「測試金鑰」確認 → 按「儲存」。</li>
+              </ol>
+
+              <h4>■ 日常使用</h4>
+              <ol>
+                <li>把游標點進任何可打字的地方（記事本、Word、聊天、瀏覽器…）。</li>
+                <li>按住<b>快捷鍵（預設「右 Ctrl」）</b>，清楚說一句話。</li>
+                <li>放開快捷鍵 → 約 1～2 秒，文字就自動出現（開始會有「嘀-嘟」提示音）。</li>
+              </ol>
+
+              <h4>■ 桌面小夥伴</h4>
+              <p>右下角小角色顯示狀態：待命 → 聆聽中 → 辨識中。<b>右鍵</b>叫出選單（開啟設定／結束程式），可滑鼠拖曳位置。</p>
+
+              <h4>■ 潤飾風格（辨識後 AI 怎麼整理你的話）</h4>
+              <p>四種風格，改寫程度：只修錯字 &lt; 自然口語 &lt; 正式書面 &lt; 精簡重點</p>
+              <ul>
+                <li><b>只修錯字</b>：最忠實，只修聽錯的字、加標點。</li>
+                <li><b>自然口語</b>（預設）：去掉「嗯、呃、那個」等贅詞，通順但保留口語感。日常聊天、筆記最好用。</li>
+                <li><b>正式書面</b>：改寫成正式專業書面語。公文、報告、email。</li>
+                <li><b>精簡重點</b>：濃縮成重點、最短。待辦、摘要。</li>
+              </ul>
+              <p class="ez-note">例：你說「呃…那個，明天會議可能要改時間，早上大家好像有事，改下午三點好不好」<br>
+              → <b>自然口語</b>：明天會議改一下時間，早上大家好像有事，改下午三點好嗎？<br>
+              → <b>正式書面</b>：明天的會議建議調整時間，因上午多數同仁另有安排，建議改至下午三點，是否方便？<br>
+              → <b>精簡重點</b>：明天會議改下午三點（上午大家有事）。</p>
+
+              <h4>■ 防毒軟體警告？（重要）</h4>
+              <p>部分防毒可能對 EzType.exe 跳警告甚至誤刪，這是<b>誤判</b>：① PyInstaller 打包的啟動碼與某些惡意程式相似，行為偵測較敏感；② 未做付費程式碼簽章，被視為不明發行者；③ 語音輸入本來就需要「監聽快捷鍵、模擬鍵盤貼上、讀寫剪貼簿」，看起來可疑但是功能必需。</p>
+              <p><b>本程式是安全的</b>：原始碼完全公開（開源 GPL-3.0），無病毒／後門／廣告／追蹤；只會以 HTTPS 連到你選的 Groq 服務（<span class="code">api.groq.com</span>）做辨識；金鑰只存在你自己電腦，不外流。若被擋下，可把 EzType 資料夾加入防毒「白名單／例外」，或上傳 VirusTotal 查驗（少數引擎誤報屬正常）。</p>
+
+              <h4>■ 常見問題</h4>
+              <p><b>Q：說話後沒出字？</b>確認麥克風沒靜音、游標有點進輸入框；顯示「我聽不清楚」＝沒收到聲音，請大聲一點、靠近麥克風；跳「金鑰無效／連不上」＝開設定檢查金鑰與網路。</p>
+              <p><b>Q：按快捷鍵跳出「檔案／編輯」選單？</b>你把快捷鍵設成 Alt 了。Alt 在 Windows 會開選單，請改用「右 Ctrl」、「F8」或「Caps Lock」。</p>
+              <p><b>Q：金鑰會被別人用到嗎？</b>不會。金鑰存在你自己的 <span class="code">%APPDATA%\EzType</span>，分享出去的 zip 不含任何金鑰，每個人各填自己的。</p>
+
+              <h4>■ 隱私</h4>
+              <p>語音與文字只會以 HTTPS 傳給你選的 Groq 服務做辨識，不傳到其他地方，也沒有追蹤。</p>
+
+              <p class="ez-credit">作者：Cona　|　改作自 whisper-writer（GPL-3.0）<br>感謝三師爸的教學 —— Claude Code Desktop 從零打造 AI 語音輸入工具：<a href="https://www.youtube.com/watch?v=laSfvJmD5nc" target="_blank" rel="noopener" style="color:#7b6ad0">教學影片 ↗</a></p>
+            </div>
+          </details></div>
+      </div>
+      
+    </div>
+
+    <div class="tblock" id="t1830" style="--t:#6a5acd">
+      <div class="tb-head"><span class="tb-time">18:30</span><span class="tb-phase">下班生活 AI 助手 🌙</span></div>
+      <div class="tb-scene">吃喝玩買一手包辦，順手防詐騙</div>
+      <div class="tb-cards">
+        <div class="pcard"><div class="ph"><span class="badge">實戰 1</span><span class="tag">@YouTube</span><span class="label">下班生活萬用助手</span></div>
+          <p>晚餐食譜、旅遊景點、開箱商品——一個萬用指令通吃：自動整理成<b>步驟摘要 + 商品購買連結 + 景點 Google Maps</b>。下班後的生活，也有 AI 幫你打理。</p></div>
+        <div class="case-box">
+          <div class="case-title">🎬 範例影片：用真實影片試試萬用助手</div>
+          <details class="case-group">
+            <summary>🍜 台南永康美食　<span class="cg-tag">試「地點＋Google Maps」</span></summary>
+            <div class="cg-body">
+              <p>打開影片 → 按 <span class="code">/</span> 呼叫技能，看它整理出店家清單＋Google Maps，下班直接照著吃。</p>
+              <a class="tb-link" href="https://youtu.be/b6eRPzrRMIA" target="_blank" rel="noopener">▶ 影片 ① ↗</a>
+              <a class="tb-link" href="https://www.youtube.com/watch?v=V-16LatQLaY" target="_blank" rel="noopener">▶ 影片 ② ↗</a>
+            </div>
+          </details>
+          <details class="case-group">
+            <summary>🛒 日本超商必買　<span class="cg-tag">試「商品清單＋購物連結」</span></summary>
+            <div class="cg-body">
+              <p>開箱／推薦影片，讓 AI 整理出有哪些必買、附上哪裡買。</p>
+              <a class="tb-link" href="https://www.youtube.com/watch?v=i37TV12eVrw" target="_blank" rel="noopener">▶ 影片 ① ↗</a>
+              <a class="tb-link" href="https://www.youtube.com/watch?v=5SAlPMCHPVU" target="_blank" rel="noopener">▶ 影片 ② ↗</a>
+              <a class="tb-link" href="https://www.youtube.com/watch?v=DeRhCIk2Jjs" target="_blank" rel="noopener">▶ 影片 ③ ↗</a>
+            </div>
+          </details>
+          <details class="case-group">
+            <summary>💊 日本藥妝必買　<span class="cg-tag">試「多支共同名單」</span></summary>
+            <div class="cg-body">
+              <p>用 <span class="code">@</span> 把三支分頁都加入，最適合試<b>共同推薦清單</b>——三支都推的就是真正必買。</p>
+              <a class="tb-link" href="https://www.youtube.com/watch?v=eSVkzfLXokc" target="_blank" rel="noopener">▶ 影片 ① ↗</a>
+              <a class="tb-link" href="https://www.youtube.com/watch?v=ziokwagUSJc" target="_blank" rel="noopener">▶ 影片 ② ↗</a>
+              <a class="tb-link" href="https://www.youtube.com/watch?v=f2UzVKyOgkA" target="_blank" rel="noopener">▶ 影片 ③ ↗</a>
+            </div>
+          </details>
+        </div>
+        <details class="inline-prompt">
+        <summary class="ip-title">📋 可直接複製的指令 —「下班生活萬用助手」</summary>
+        <div class="prompt-layout">
+          <div class="steps-box">
+            <div class="sb-title">🛠️ 實作步驟</div>
+            <ol>
+              <li>在側邊欄輸入 <span class="code">/</span> → 選「<b>＋ 加入技能</b>」，命名「<b>生活影片萬用拆解</b>」</li>
+              <li>指令貼上右側文字 → 儲存</li>
+              <li>開啟 YouTube 影片（食譜／開箱／旅遊 Vlog），按 <span class="code">/</span> 呼叫此技能</li>
+              <li>步驟、商品連結、景點地圖一次到位 🍳🛍️🗺️</li>
+            </ol>
+            <p style="font-size:13px;color:#7a5a06;margin-top:.7em">※ <b>想比較多支影片？</b>Gemini 預設<b>只讀「當前分頁」</b>。請先把每支影片各開一個分頁，呼叫技能時用 <span class="code">@</span> <b>逐一點選把每個分頁加入</b>，它才會一起讀、整理出「共同名單」。</p>
+          </div>
+          <div class="prompt-box">
+            <button class="copy-btn" data-target="p-life" aria-label="複製指令">⧉ 複製</button>
+            <pre id="p-life">分析<hl>當前網頁影片內容</hl>，並執行以下結構化任務：
+
+<mark>### 0. 多支影片：先給共同名單</mark>
+若我用 <span class="code">@</span> 提供了<hl>多支影片</hl>（或逐一貼上多支網址），請<hl>先</hl>整理一份<hl>「共同推薦清單」放在最前面</hl>：列出<hl>多支影片都有提到的商品或地點</hl>（標出被幾支影片提及），這些通常就是最值得買／最值得去的。<hl>之後再接下面各支影片的個別分析。</hl>（若只有一支影片，跳過此項。）
+
+<mark>### 1. 核心內容摘要</mark>
+將影片內容以<hl>子彈筆記</hl>形式整理。若為教學影片，請將內容拆解為具體的<hl>步驟清單（Step-by-Step）</hl>，並且有時間戳記：針對每一個重點或教學步驟，標註影片中的精確時間戳記（Timestamp）。
+
+<mark>### 2. 商品清單</mark>
+若影片提及商品，請列出商品名稱，並根據上下文搜尋並提供對應的<hl>購物連結</hl>。
+
+<mark>### 3. 地點資訊</mark>
+若影片提及實體地點，請列出地點名稱，並提供該地點的 <hl>Google Maps 連結</hl>。
+
+請確保所有資訊<hl>精準、客觀</hl>，並以清晰的 <hl>Markdown 格式</hl>輸出。</pre>
+          </div>
+        </div>
+      </details>
+        <div class="pcard"><div class="ph"><span class="badge">實戰 2</span><span class="label">資訊素養</span></div>
+          <p>把可疑的包裹簡訊或一頁式廣告貼給 AI 進行防詐騙分析，自保的同時也累積資訊素養課的現成教材。</p></div>
+        <div class="case-box">
+          <div class="case-title">📌 真實詐騙案例（拿來當課堂教材）</div>
+          <p style="font-size:13.5px;color:#5a4a7a;margin:.2em 0 .7em">把這些貼文丟給上面的「防詐騙分析」技能，讓 AI 拆解手法——<b>用魔法打敗魔法</b>。</p>
+          <a class="tb-link" href="https://www.facebook.com/share/p/1BTPgX5mA2/" target="_blank" rel="noopener">案例 ①｜FB 詐騙貼文 ↗</a>
+          <a class="tb-link" href="https://www.facebook.com/share/p/1a1ydYgRDq/" target="_blank" rel="noopener">案例 ②｜FB 詐騙貼文 ↗</a>
+          <a class="tb-link" href="https://www.facebook.com/share/p/18yJQYegns/" target="_blank" rel="noopener">案例 ③｜FB 詐騙貼文 ↗</a>
+        </div>
+        <details class="inline-prompt" style="margin-top:10px">
+        <summary class="ip-title">📋 可直接複製的指令 —「防詐騙分析」</summary>
+        <div class="prompt-layout">
+          <div class="steps-box">
+            <div class="sb-title">🛠️ 實作步驟</div>
+            <ol>
+              <li>在側邊欄輸入 <span class="code">/</span> → 選「<b>＋ 加入技能</b>」，命名「<b>防詐騙分析</b>」</li>
+              <li>指令貼上右側文字 → 儲存</li>
+              <li>收到可疑訊息，複製全文貼進 Gemini，按 <span class="code">/</span> 呼叫此技能</li>
+              <li>結果可直接截圖分享給學生或家長 🛡️</li>
+            </ol>
+          </div>
+          <div class="prompt-box">
+            <button class="copy-btn" data-target="p-scam" aria-label="複製指令">⧉ 複製</button>
+            <pre id="p-scam">你是一位資訊安全分析師。
+
+<mark>【任務】</mark>我會貼上一則可疑的簡訊、LINE 訊息或廣告內容。請幫我分析是否為詐騙或不實廣告。
+
+<mark>【分析項目】</mark>
+1. <hl>風險評估</hl>：高風險／中風險／低風險
+2. <hl>可疑點</hl>：具體說明哪裡有問題
+3. <hl>建議行動</hl>：忽略／封鎖／通報 165
+
+請用<hl>簡單易懂的語言</hl>說明即可。</pre>
+          </div>
+        </div>
+      </details>
+        
+      </div>
+      
+      
+    </div>
+  </section>
+
+  <!-- 結語 -->
+  <section class="block closing" id="end">
+    <div class="h2"><span class="ico">🎉</span><span class="ord">結語</span></div>
+    <p>一句話<b>描述</b>、隨時<b>呼叫</b>、在<b>每個網頁</b>都能用——Gemini 技能讓你設定一次、終身受用，<br>把<b>省下的時間</b>，留給真正重要的——<b class="hl-gold">你和家人</b>。</p>
+    <div class="dcps-row">
+      <div class="dcps"><div class="dl">D</div><div class="de"><span class="hi">D</span>escribe once</div><div class="dz">描述一次</div></div>
+      <div class="dcps"><div class="dl">C</div><div class="de"><span class="hi">C</span>all anytime</div><div class="dz">隨時呼叫</div></div>
+      <div class="dcps"><div class="dl">P</div><div class="de"><span class="hi">P</span>owers every page</div><div class="dz">每頁都能用</div></div>
+      <div class="dcps"><div class="dl">S</div><div class="de"><span class="hi">S</span>aves your time</div><div class="dz">省你的寶貴時間</div></div>
+    </div>
+    <p class="dcps-foot">—— DCPS · 大橋國小 ——</p>
+  </section>
+</main>
+
+<!-- right navigation dock -->
+<nav class="dock" id="dock">
+  <button class="dock-toggle" id="dockToggle" aria-label="收合導覽">✕</button>
+  <a data-target="hero"><span class="d-key">🚀</span><span class="d-label">首頁</span></a>
+  <a data-target="sec3"><span class="d-key">💡</span><span class="d-label">壹 為何需要</span></a>
+  <a data-target="sec1"><span class="d-key">🛠️</span><span class="d-label">貳 開始之前</span></a>
+  <div class="dock-group">
+    <a data-target="sec4"><span class="d-key">☀️</span><span class="d-label">參 校園的一日</span></a>
+    <div class="submenu">
+      <a class="sublink" data-target="t0830">🗓️ 08:30 晨會</a>
+      <a class="sublink" data-target="t1030">🎬 10:30 影片教學</a>
+      <a class="sublink" data-target="t1200">🧋 12:00 午休</a>
+      <a class="sublink" data-target="t1400">🎨 14:00 視覺教材</a>
+      <a class="sublink" data-target="t1500">📚 15:00 進修與收尾</a>
+      <a class="sublink" data-target="t1830">🌙 18:30 下班生活</a>
+    </div>
+  </div>
+  <a data-target="end"><span class="d-key">🎉</span><span class="d-label">結語</span></a>
+</nav>
+
+<script>
+(function(){
+  // progress bar
+  const prog=document.getElementById('progress');
+  function onScroll(){
+    const h=document.documentElement;
+    const max=h.scrollHeight-h.clientHeight;
+    prog.style.width=(max>0?(h.scrollTop/max*100):0)+'%';
+  }
+  window.addEventListener('scroll',onScroll,{passive:true});onScroll();
+
+  // dock smooth scroll + scroll spy
+  const dock=document.getElementById('dock');
+  const dockToggle=document.getElementById('dockToggle');
+  if(dockToggle){
+    dockToggle.addEventListener('click',()=>{
+      const collapsed=dock.classList.toggle('collapsed');
+      dockToggle.textContent=collapsed?'☰':'✕';
+      dockToggle.setAttribute('aria-label',collapsed?'展開導覽':'收合導覽');
+    });
+  }
+  const allLinks=Array.from(dock.querySelectorAll('a'));
+  allLinks.forEach(a=>a.addEventListener('click',()=>{
+    const el=document.getElementById(a.dataset.target);
+    if(el) el.scrollIntoView({behavior:'smooth',block:'start'});
+  }));
+  const spyLinks=allLinks.filter(a=>!a.classList.contains('sublink'));
+  const subLinks=allLinks.filter(a=>a.classList.contains('sublink'));
+  const targets=spyLinks.map(a=>document.getElementById(a.dataset.target)).filter(Boolean);
+  const io=new IntersectionObserver(entries=>{
+    entries.forEach(en=>{
+      if(en.isIntersecting){
+        const id=en.target.id;
+        spyLinks.forEach(a=>a.classList.toggle('active',a.dataset.target===id));
+      }
+    });
+  },{rootMargin:'-45% 0px -50% 0px',threshold:0});
+  targets.forEach(t=>io.observe(t));
+  // highlight current time block inside submenu
+  const subTargets=subLinks.map(a=>document.getElementById(a.dataset.target)).filter(Boolean);
+  const io2=new IntersectionObserver(entries=>{
+    entries.forEach(en=>{
+      if(en.isIntersecting){
+        const id=en.target.id;
+        subLinks.forEach(a=>a.classList.toggle('active',a.dataset.target===id));
+      }
+    });
+  },{rootMargin:'-45% 0px -50% 0px',threshold:0});
+  subTargets.forEach(t=>io2.observe(t));
+
+  // subject tabs
+  document.querySelectorAll('.stab').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      const tblock = btn.closest('.tblock');
+      tblock.querySelectorAll('.stab').forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      tblock.querySelectorAll('.subj-panel').forEach(p=>p.style.display='none');
+      const target = tblock.querySelector('#'+btn.dataset.panel);
+      if(target) target.style.display='block';
+    });
+  });
+
+  // copy buttons
+  document.querySelectorAll('.copy-btn').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      const pre=document.getElementById(btn.dataset.target);
+      const text=pre?pre.textContent:'';
+      const done=()=>{btn.classList.add('done');const o=btn.textContent;btn.textContent='✓ 已複製';
+        setTimeout(()=>{btn.classList.remove('done');btn.textContent=o;},1600);};
+      if(navigator.clipboard&&navigator.clipboard.writeText){
+        navigator.clipboard.writeText(text).then(done).catch(()=>fb(text,done));
+      }else{fb(text,done);}
+    });
+  });
+  function fb(text,cb){const ta=document.createElement('textarea');ta.value=text;ta.style.position='fixed';ta.style.opacity='0';
+    document.body.appendChild(ta);ta.select();try{document.execCommand('copy');cb();}catch(e){}document.body.removeChild(ta);}
+})();
+</script>
+</body>
+</html>
