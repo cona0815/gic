@@ -172,6 +172,21 @@
     border-radius:12px;background:color-mix(in srgb, var(--t,#888) 7%, #fff)}
   .case-title{font-weight:800;color:var(--t,#444);font-size:14.5px}
   .case-box .tb-link{margin-top:6px}
+  /* Google Lens how-to */
+  .lens-help{margin:0 0 .7em;border:1px dashed #e3a008;border-radius:9px;overflow:hidden;background:#fffdf6}
+  .paid-note{margin-top:10px;border-radius:10px;overflow:hidden;border:1px solid #f0c98a;background:#fff7e6}
+  .paid-note p{margin:0;padding:9px 13px;font-size:13.5px;line-height:1.65;color:#7a4f06}
+  .paid-note .paid-deal{background:#e8f7ee;color:#1f6b3b;border-top:1px solid #cdeed8}
+  .paid-note .paid-deal b{color:#15803d}
+  .paid-note .deal-link{display:inline-block;margin-left:6px;background:#15803d;color:#fff;text-decoration:none;
+    font-weight:700;font-size:12.5px;padding:2px 10px;border-radius:999px}
+  .paid-note .deal-link:hover{background:#0f6b30}
+  .lens-help > summary{cursor:pointer;list-style:none;padding:7px 11px;font-weight:700;font-size:13px;color:#9a6a06}
+  .lens-help > summary::-webkit-details-marker{display:none}
+  .lens-help > summary::before{content:"▸";margin-right:.4em;transition:transform .2s;display:inline-block}
+  .lens-help[open] > summary::before{transform:rotate(90deg)}
+  .lens-help .lens-body{padding:2px 14px 11px}
+  .lens-help .lens-body ol{margin:.2em 0;padding-left:1.4em;font-size:13px;color:#5c4410;line-height:1.7}
   /* hierarchical example groups */
   .case-group{margin-top:8px;border:1px solid color-mix(in srgb, var(--t,#888) 20%, #fff);border-radius:10px;background:#fff;overflow:hidden}
   .case-group > summary{cursor:pointer;list-style:none;padding:8px 12px;font-weight:700;font-size:13.5px;color:#4a3a6a;
@@ -240,6 +255,7 @@
   .closing p{color:#dfe2ff;font-size:clamp(15px,1.8vw,19px)}
   .closing p b{color:#fff}
   .closing p b.hl-gold{color:#ffd56b}
+  .closing p .egg{font-size:.72em;color:#b9bce8;opacity:.85;font-weight:400;margin-left:.2em}
   .dcps .de .hi{color:#ffc56b;font-weight:800}
   .stat-row{display:flex;gap:clamp(28px,6vw,72px);justify-content:center;flex-wrap:wrap;margin-top:1.2em}
   .stat .n{font-family:var(--font-disp);font-weight:600;font-size:clamp(38px,6vw,76px);line-height:1;color:#ffc56b}
@@ -416,6 +432,11 @@
           <li>點右上角「<b>問問 Gemini</b>」或用快速鍵打開側邊欄</li>
           <li>選擇技能，一鍵套用！</li>
         </ol>
+        <p style="font-size:13px;color:#555;margin-top:.6em">💡 想<b>查看／管理你所有的技能</b>，網址列直接輸入：</p>
+        <div class="cmd-box" style="background:#eef2ff;border-color:#c9d4f5">
+          <code id="url-skills" style="color:#2f3e63">chrome://skills/yourSkills</code>
+          <button class="copy-btn mini-copy" data-target="url-skills" aria-label="複製">⧉</button>
+        </div>
       </div>
       <div class="step">
         <div class="step-no">6</div><h3>開不出 Skills？地區解法</h3>
@@ -797,7 +818,10 @@
 
 <mark>【任務】</mark>當大家在 LINE 群組對話完成保健品團購，我會把對話貼給你。請統整成<hl>同一張表格</hl>，分成上下兩段，<hl>重點是把金額算清楚</hl>。
 
-<mark>【上半部：個人明細（收錢用）】</mark>請<hl>依訂購人分組</hl>，把同一位老師的所有品項列在一起；每列欄位：訂購人、品項、單價、數量、小計金額。每位老師的品項列完後，<hl>緊接一列「○○○ 小計：共 ○ 件，應付 $○」</hl>，清楚標出這位老師要付多少，方便逐一收錢。
+<mark>【上半部：個人明細（收錢用）】</mark>請<hl>依訂購人分組</hl>，把同一位老師的所有品項列在一起；每列欄位：訂購人、品項、單價、數量、小計金額、<hl>已繳交</hl>。
+・<hl>小計金額＝單價 × 數量，務必算出實際數字填入，不可留空</hl>。
+・<hl>「已繳交」欄一律留空白</hl>（不要填任何字），方便我收到錢後自己打勾。
+・每位老師的品項列完後，<hl>緊接一列「○○○ 小計：共 ○ 件，應付 $○」</hl>——這裡的<hl>件數與金額務必加總算出實際數字，絕對不可空白</hl>，方便逐一收錢。
 
 <mark>【分隔列】</mark>中間插一列分隔，例如「──── 以下為給廠商的訂單 ────」。
 
@@ -806,6 +830,7 @@
 最後加一列「<hl>總計</hl>」算出<hl>總數量與總金額</hl>，並在表格下方寫出「<hl>總共 ○ 件，金額 $○</hl>」。上下兩段金額要一致。
 
 <mark>【注意事項】</mark>
+・<hl>所有金額與件數一定要算出實際數字</hl>，不要只放標題或留空（特別是每人小計那一列）。
 ・同一人若改過訂單，<hl>以最後一次為準</hl>。
 ・沒寫數量的，預設 1 並標示「<hl>(未確認)</hl>」。
 ・單價對話中有提到就帶入；沒提到標示「<hl>$?</hl>」提醒我補價格。
@@ -830,6 +855,18 @@
         <div class="case-box">
           <div class="case-title">📚 三大教科書電子書（開課本頁面來試）</div>
           <p style="font-size:13.5px;color:#5a4a7a;margin:.2em 0 .7em">打開你用的版本、翻到要上的那一課（網頁版電子書），就能讓 Nano Banana <b>讀當前頁面</b>畫成心智圖／資訊圖表。<b>需用教師或教育雲端帳號登入。</b></p>
+          <p style="font-size:13px;color:#7a4f06;background:#fff3da;border:1px solid #f0d28a;border-radius:8px;padding:8px 11px;margin:.2em 0 .7em">💡 <b>電子書是跨頁（一次兩頁）、無法指定範圍？</b>用 Chrome 的<b>智慧鏡頭（Google 智慧鏡頭）框選 →「複製文字」</b>，把要的那段文字複製起來，再貼到「<b>問問 Gemini</b>」請它生圖，就能精準只處理你要的範圍。</p>
+          <details class="lens-help">
+            <summary>🔍 找不到智慧鏡頭按鈕？點我看怎麼開啟</summary>
+            <div class="lens-body">
+              <ol>
+                <li>網址列輸入 <span class="code" id="url-appearance">chrome://settings/appearance</span><button class="copy-btn mini-copy" data-target="url-appearance" aria-label="複製">⧉</button>（或：<b>設定 → 外觀</b>）</li>
+                <li>找到「<b>自訂工具列</b>」→ 點進去</li>
+                <li>在「<b>工具與動作</b>」清單中，把「<b>使用 Google 智慧鏡頭搜尋這個分頁</b>」<b>打開</b>（開關變藍）</li>
+                <li>工具列（網址列附近）就會出現智慧鏡頭按鈕，點它即可框選、複製文字 ✅</li>
+              </ol>
+            </div>
+          </details>
           <a class="tb-link" href="https://digitalmaster.knsh.com.tw/" target="_blank" rel="noopener">▶ 康軒（數位高手）↗</a>
           <a class="tb-link" href="https://edisc3.hle.com.tw/" target="_blank" rel="noopener">▶ 翰林（行動大師3）↗</a>
           <a class="tb-link" href="https://reader.oneclass.com.tw/bookstore" target="_blank" rel="noopener">▶ 南一（NaniBook 書城）↗</a>
@@ -920,11 +957,16 @@
         </div>
       </div>
         <div class="pcard"><div class="ph"><span class="badge">實戰 2</span><span class="label">一鍵生成教學簡報</span></div>
-          <p>更狂的是——側邊欄直接下「<b>把這個做成投影片</b>」，Gemini 會在畫面中央<b>生出一整份簡報</b>（含封面、章節、示意圖），預覽滿意後點「<b>匯出成簡報</b>」存成 Google 簡報。讀課文那頁 → 秒出上課簡報。</p></div>
+          <p>更狂的是——側邊欄直接下「<b>把這個做成投影片</b>」，Gemini 會在畫面中央<b>生出一整份簡報</b>（含封面、章節、示意圖），預覽滿意後點「<b>匯出成簡報</b>」存成 Google 簡報。讀課文那頁 → 秒出上課簡報。</p>
+          <div class="paid-note">
+            <p>⚠️ <b>「做成投影片」需要 Gemini 付費版</b>（Google AI Plus 以上）才能成功生成；免費版通常只會回文字大綱。</p>
+            <p class="paid-deal">✨ <b>好消息</b>：Google AI Plus 最近<b>降價到每月 NT$165</b>，含 <b>400GB 雲端空間</b>、可與<b>最多 5 位家庭成員共用</b>，還能用 Gemini 3 Pro、Deep Research 等進階功能。<br>💰 <b>揪家人一起分更划算</b>：最多 6 人共用（管理者＋5 位成員），<b>家庭成員不需額外付費也能用 AI 功能</b>（Google 官方），平攤下來<b>每人每月約 28 元</b>。<a class="deal-link" href="https://one.google.com/about/google-ai-plans/" target="_blank" rel="noopener">前往訂閱 ↗</a><br><span style="font-size:12px;color:#3a7a52">※ 須由管理者在 Google One 手動開啟「與家庭成員共用」，家人才用得到 AI；影片生成等 AI 點數為全家共用總額。</span></p>
+          </div></div>
         <div class="case-box">
           <div class="case-title">🏫 拿學校公告來試生簡報</div>
           <p style="font-size:13.5px;color:#5a4a7a;margin:.2em 0 .7em">打開這則大橋國小公告 → 按 <span class="code">/</span> 呼叫「一鍵生成簡報」，看 AI 把公告變成一份可上台報告的簡報。</p>
           <a class="tb-link" href="https://www.dcps.tn.edu.tw/modules/school/index.php?department_id=3&zone_id=0&page_id=13&content_id=196&type=news&from_op=all_news" target="_blank" rel="noopener">▶ 大橋國小公告（範例）↗</a>
+          <a class="tb-link" href="https://docs.google.com/presentation/d/13ALGp6XsUrKhTqseLRjQI6NeZ17L0lnyX9UDSTDpVyM/edit?slide=id.p5#slide=id.p5" target="_blank" rel="noopener">📊 看 AI 生成的簡報成品（範例）↗</a>
         </div>
         <details class="inline-prompt" style="margin-top:10px">
         <summary class="ip-title">📋 可直接複製的指令 —「一鍵生成簡報」</summary>
@@ -937,11 +979,11 @@
               <li>按 <span class="code">/</span> 呼叫，Gemini 在<b>畫面中央生出簡報</b>，可逐頁預覽</li>
               <li>要改再說「<b>第 3 張改成…</b>」；滿意後點「<b>匯出成簡報</b>」存成 Google 簡報 ✅</li>
             </ol>
-            <p style="font-size:13px;color:#7a5a06;margin-top:.7em">※ 簡報在 Gemini 中生成，可一直追問調整；匯出後即是<b>可編輯的 Google 簡報</b>。</p>
+            <p style="font-size:13px;color:#7a5a06;margin-top:.7em">※ 簡報在 Gemini 中生成，可一直追問調整；匯出後即是<b>可編輯的 Google 簡報</b>。<br>※ 若它只回「文字大綱」沒生出投影片，<b>回一句「請直接做成投影片，不要只給文字」</b>通常就會生成。</p>
           </div>
           <div class="prompt-box">
             <button class="copy-btn" data-target="p-slides" aria-label="複製指令">⧉ 複製</button>
-            <pre id="p-slides">請把<hl>我目前正在看的這個網頁／影片內容</hl>（或我貼上的內容）<hl>做成一份簡報</hl>。
+            <pre id="p-slides"><mark>【最高指令｜直接做出投影片】</mark>請把<hl>我目前正在看的這個網頁／影片內容</hl>（或我貼上的內容）<hl>「做成投影片」</hl>——<hl>請直接生成一份可預覽、可匯出成 Google 簡報的投影片</hl>，<hl>不要只給我文字大綱或視覺腳本</hl>，也不要回我「無法產出檔案」。
 
 <mark>【對象】</mark>〔例如：國小五年級學生／全校教師晨會〕
 <mark>【主題聚焦】</mark>〔可留空讓你自動抓重點，或填我想強調的部分〕
@@ -962,9 +1004,9 @@
 ・標題與內文都要<hl>清楚、完整、不缺字</hl>；若某字無法正常顯示，請換字或改用文字方塊重打。
 ・整體風格：簡潔、現代、對比清楚〔可指定：教育活潑／商務專業／文青手感〕。
 
-<mark>【檔名建議】</mark>簡報標題請用格式：<hl>【簡報】主題_YYYYMMDD</hl>（例：【簡報】東港迎王_20260605），方便我命名與搜尋。
+<mark>【檔名建議】</mark>Google 簡報標題請用格式：<hl>【簡報】主題_YYYYMMDD</hl>（例：【簡報】東港迎王_20260605），方便我命名與搜尋。
 
-完成後請<hl>直接「匯出成簡報」</hl>；若某頁要改，我再說「第 N 張改成…」。</pre>
+完成後請<hl>直接「匯出成 Google 簡報」</hl>；若某頁要改，我再說「第 N 張改成…」。</pre>
           </div>
         </div>
       </details>
@@ -1006,7 +1048,7 @@
         <div class="pcard"><div class="ph"><span class="badge">實戰 2</span><span class="label">AI 專屬評語生成小幫手</span></div>
           <p>把你<b>以前寫過的評語</b>丟給它<b>學習你的風格</b>，再依每位學生的特質生成評語——不是冷冰冰的套版，而是延續你的語氣、寫出<b>有溫度、看得見師生情感</b>的話，讓每個孩子都被真正「看見」。</p>
           <p style="margin-top:.6em">💡 <b>搭配口語輸入法（EzType）更省力</b>：用<b>講的</b>口述每位學生的印象與重點，直接變文字丟進範本，連打字都省了。</p>
-          <a class="tb-link" href="https://gemini.google.com/share/62e4fb735bef" target="_blank" rel="noopener">▶ 開啟 AI 專屬評語生成小幫手 ↗</a>
+          <a class="tb-link" href="https://gemini.google.com/share/8463208d3395" target="_blank" rel="noopener">▶ 開啟 AI 專屬評語生成小幫手 ↗</a>
           <a class="tb-link" href="https://www.chinesewords.org/sentence/7774-781.html" target="_blank" rel="noopener">▶ 評語參考用語 ↗</a>
           <a class="tb-link" href="https://home.myhpcloud.com/acs/fileshare/?shareToken=ay9MNXorNW16VEx3MVUwMlBkY0V6UT09OjpIRjZwaytNS2UzelFZbm5pcjdwVnZ3PT06OlV0U0daTk43eWhGODFNL09QQWhKUFE9PQ==" target="_blank" rel="noopener">▶ 取得口語輸入法 EzType ↗</a>
           <details class="eztype-help">
@@ -1176,7 +1218,7 @@
   <!-- 結語 -->
   <section class="block closing" id="end">
     <div class="h2"><span class="ico">🎉</span><span class="ord">結語</span></div>
-    <p>一句話<b>描述</b>、隨時<b>呼叫</b>、在<b>每個網頁</b>都能用——Gemini 技能讓你設定一次、終身受用，<br>把<b>省下的時間</b>，留給真正重要的——<b class="hl-gold">你和家人</b>。</p>
+    <p>一句話<b>描述</b>、隨時<b>呼叫</b>、在<b>每個網頁</b>都能用——Gemini 技能讓你設定一次、終身受用，<br>把<b>省下的時間</b>，留給真正重要的——<b class="hl-gold">你和家人</b>。<span class="egg">…還有追劇 🍿</span></p>
     <div class="dcps-row">
       <div class="dcps"><div class="dl">D</div><div class="de"><span class="hi">D</span>escribe once</div><div class="dz">描述一次</div></div>
       <div class="dcps"><div class="dl">C</div><div class="de"><span class="hi">C</span>all anytime</div><div class="dz">隨時呼叫</div></div>
